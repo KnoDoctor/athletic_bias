@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+import { generateGuid } from "../../../utils/uuids";
+
 export default async function handle(req, res) {
     switch (req.method) {
         case "GET":
@@ -12,27 +14,40 @@ export default async function handle(req, res) {
     }
 
     async function getCoaches() {
-        const allUsers = await prisma.coaches.findMany({
-            select: { first_name: true, id: true },
-        });
+        try {
+            const allUsers = await prisma.coaches.findMany({
+                select: { id: true, email: true, first_name: true },
+            });
 
-        res.json(allUsers);
+            res.status(200).json({
+                success: true,
+                data: allUsers,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                success: false,
+                error: error,
+            });
+        }
     }
 
     async function createCoach() {
         try {
-            const { first_name } = req.body;
+            const { first_name, email } = req.body;
 
-            if (!first_name) {
+            if (!first_name || !email) {
                 return res.status(400).json({
                     success: false,
-                    error: "Could not create coach, first name parameter is missing.",
+                    error: "Could not create coach, first name or email parameter is missing.",
                 });
             }
 
             const createdCoach = await prisma.coaches.create({
                 data: {
+                    id: generateGuid(),
                     first_name,
+                    email,
                 },
             });
 
