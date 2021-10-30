@@ -1,0 +1,44 @@
+import React from "react";
+import MUIInputLabel from "@mui/material/InputLabel";
+import MUIOutlinedInput from "@mui/material/OutlinedInput";
+import MUIFormControl from "@mui/material/FormControl";
+
+const TextInput = ({ id, type, label, value, onChange, endAdornment }) => {
+    return (
+        <MUIFormControl style={{ margin: "1rem 0", width: "100%" }}>
+            <MUIInputLabel>{label}</MUIInputLabel>
+            <MUIOutlinedInput
+                id={id}
+                type={type}
+                label={label}
+                value={value}
+                onChange={onChange}
+                endAdornment={endAdornment}
+            />
+        </MUIFormControl>
+    );
+};
+
+export default TextInput;
+
+{
+    /* <OutlinedInput
+            id="outlined-adornment-password"
+            type={values.showPassword ? 'text' : 'password'}
+            value={values.password}
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          /> */
+}
