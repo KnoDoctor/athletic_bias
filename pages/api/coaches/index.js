@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 import Cors from "cors";
-import initMiddleware from "../../lib/init-middleware";
+import initMiddleware from "../../../utils/init-middleware";
 
 import { generateGuid } from "../../../utils/uuids";
 
