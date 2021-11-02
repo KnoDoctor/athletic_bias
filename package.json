@@ -22,8 +22,9 @@
         "uuid": "^8.3.2"
     },
     "scripts": {
-        "dev": "env-cmd -f .env.development next",
+        "dev": "env-cmd -f .env.local next",
         "build": "next build",
+        "build:develop": "env-cmd -f .env.development next build",
         "start": "next start",
         "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
     },
