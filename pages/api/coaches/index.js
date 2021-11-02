@@ -1,21 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-import Cors from "cors";
-import initMiddleware from "../../../utils/init-middleware";
-
 import { generateGuid } from "../../../utils/uuids";
-
-// Initialize the cors middleware
-const cors = initMiddleware(
-    // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
-    Cors({
-        // Allow Origin
-        origin: "*",
-        // Only allow requests with GET, POST and OPTIONS
-        methods: ["GET", "POST", "OPTIONS"],
-    })
-);
 
 export default async function handle(req, res) {
     switch (req.method) {
@@ -48,8 +34,6 @@ export default async function handle(req, res) {
 
     async function createCoach() {
         try {
-            await cors(req, res);
-
             const { first_name, last_name, email } = req.body;
 
             if (!first_name) {
