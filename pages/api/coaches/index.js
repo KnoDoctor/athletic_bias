@@ -34,12 +34,24 @@ export default async function handle(req, res) {
 
     async function createCoach() {
         try {
-            const { first_name, email } = req.body;
+            const { first_name, last_name, email } = req.body;
 
-            if (!first_name || !email) {
+            if (!first_name) {
                 return res.status(400).json({
                     success: false,
-                    error: "Could not create coach, first name or email parameter is missing.",
+                    error: "Could not create coach, first name parameter is missing.",
+                });
+            }
+            if (!last_name) {
+                return res.status(400).json({
+                    success: false,
+                    error: "Could not create coach, last name parameter is missing.",
+                });
+            }
+            if (!email) {
+                return res.status(400).json({
+                    success: false,
+                    error: "Could not create coach, email parameter is missing.",
                 });
             }
 
@@ -47,6 +59,7 @@ export default async function handle(req, res) {
                 data: {
                     id: generateGuid(),
                     first_name,
+                    last_name,
                     email,
                 },
             });
