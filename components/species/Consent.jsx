@@ -1,10 +1,16 @@
+/*
+THIS NEED TO BE CONSOLIDATED IN THE CONSENT
+FORM ORGANISM THEN DELETED!!!!
+*/
+
 import { Container } from "@mui/material";
 import { useState } from "react";
 
 import Button from "../atoms/Button";
 
 import ConsentForm from "../organisms/ConsentForm";
-import FullScreenDialog from "../organisms/FullScreenDialog";
+import FullScreenDialog from "../molecules/FullScreenDialog";
+import CoachDetailsForm from "../organisms/CoachDetailsForm";
 
 export default () => {
     const [open, setOpen] = useState(false);
@@ -23,6 +29,7 @@ export default () => {
                 handleDialogClickOpen={handleDialogClickOpen}
                 hasConsented={hasConsented}
             />
+            <CoachDetailsForm />
             <FullScreenDialog
                 open={open}
                 handleDialogClickOpen={handleDialogClickOpen}

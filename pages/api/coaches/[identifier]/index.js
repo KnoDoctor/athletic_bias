@@ -8,8 +8,6 @@ export default async function handle(req, res) {
         method,
     } = req;
 
-    const isGuid = checkIfGuid(identifier);
-
     switch (method) {
         case "GET":
             try {
@@ -17,9 +15,9 @@ export default async function handle(req, res) {
 
                 coach = await prisma.coaches.findUnique({
                     where: {
-                        id: identifier,
+                        coach_id: identifier,
                     },
-                    select: { id: true, email: true, first_name: true },
+                    select: { coach_id: true, email: true, first_name: true },
                 });
 
                 if (coach) {
@@ -49,7 +47,7 @@ export default async function handle(req, res) {
 
                 const patchedPost = await prisma.coaches.update({
                     where: {
-                        id: identifier,
+                        coach_id: identifier,
                     },
                     data: {
                         first_name,
@@ -75,7 +73,7 @@ export default async function handle(req, res) {
             try {
                 const deletedPost = await prisma.coaches.delete({
                     where: {
-                        id: identifier,
+                        coach_id: identifier,
                     },
                 });
 

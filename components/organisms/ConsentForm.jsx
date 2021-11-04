@@ -58,7 +58,7 @@ const ConsentForm = ({ hasConsented, handleDialogClickOpen }) => {
         let createCoachRes = await fetch(
             `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/coaches`,
             {
-                method: "POST", // or 'PUT'
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -134,7 +134,7 @@ const ConsentForm = ({ hasConsented, handleDialogClickOpen }) => {
                             color="primary"
                             onClick={handleViewConsentFormClick}
                         >
-                            Review Consent Form
+                            Consent Form
                         </Button>
                     </Box>
                 ) : (

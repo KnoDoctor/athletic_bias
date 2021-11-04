@@ -16,7 +16,7 @@ export default async function handle(req, res) {
     async function getCoaches() {
         try {
             const allUsers = await prisma.coaches.findMany({
-                select: { id: true, email: true, first_name: true },
+                select: { coach_id: true, email: true, first_name: true },
             });
 
             res.status(200).json({
@@ -57,7 +57,7 @@ export default async function handle(req, res) {
 
             const createdCoach = await prisma.coaches.create({
                 data: {
-                    id: generateGuid(),
+                    coach_id: generateGuid(),
                     first_name,
                     last_name,
                     email,

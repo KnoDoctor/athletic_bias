@@ -7,10 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model coaches {
-  first_name String? @db.VarChar(250)
-  id         String  @id @db.Uuid
-  email      String? @unique @db.VarChar(100)
-  last_name  String? @db.VarChar(250)
+  first_name      String?   @db.VarChar(250)
+  coach_id        String    @id @db.Uuid
+  email           String?   @unique @db.VarChar(100)
+  last_name       String?   @db.VarChar(250)
+  date_of_birth   DateTime? @db.Date
+  gender_identity String?   @db.VarChar(100)
+  education_level String?   @db.VarChar(100)
+  sport_id        String?   @db.Uuid
+  has_consented   Boolean?
+  sports          sports?   @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
+}
+
+model sports {
+  sport_id String    @id @db.Uuid
+  name     String?   @db.VarChar(250)
+  coaches  coaches[]
 }

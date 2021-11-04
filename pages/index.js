@@ -1,4 +1,4 @@
-import Consent from "../components/templates/Consent";
+import Consent from "../components/species/Consent";
 
 import Container from "@mui/material/Container";
 

@@ -25,7 +25,7 @@ function HideOnScroll(props) {
     );
 }
 
-export default function ScrollingAppBar(props) {
+export default function HidingAppBar(props) {
     return (
         <React.Fragment>
             <CssBaseline />
