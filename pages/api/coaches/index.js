@@ -16,7 +16,18 @@ export default async function handle(req, res) {
     async function getCoaches() {
         try {
             const allUsers = await prisma.coaches.findMany({
-                select: { coach_id: true, email: true, first_name: true },
+                // select: {
+                //     coach_id: true,
+                //     email: true,
+                //     first_name: true,
+                //     sport: true,
+                //     preferences: true,
+                // },
+
+                include: {
+                    preferences: true,
+                    sport: true,
+                },
             });
 
             res.status(200).json({

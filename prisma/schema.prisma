@@ -8,20 +8,45 @@ datasource db {
 }
 
 model coaches {
-  first_name      String?   @db.VarChar(250)
-  coach_id        String    @id @db.Uuid
-  email           String?   @unique @db.VarChar(100)
-  last_name       String?   @db.VarChar(250)
-  date_of_birth   DateTime? @db.Date
-  gender_identity String?   @db.VarChar(100)
-  education_level String?   @db.VarChar(100)
-  sport_id        String?   @db.Uuid
+  first_name      String?       @db.VarChar(250)
+  coach_id        String        @id @db.Uuid
+  email           String?       @unique @db.VarChar(100)
+  last_name       String?       @db.VarChar(250)
+  date_of_birth   DateTime?     @db.Date
+  gender_identity String?       @db.VarChar(100)
+  education_level String?       @db.VarChar(100)
+  sport_id        String?       @db.Uuid
   has_consented   Boolean?
-  sports          sports?   @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
+  sport           sports?       @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
+  preferences     preferences[]
 }
 
 model sports {
-  sport_id String    @id @db.Uuid
-  name     String?   @db.VarChar(250)
-  coaches  coaches[]
+  sport_id    String        @id @db.Uuid
+  name        String?       @db.VarChar(250)
+  coaches     coaches[]
+  preferences preferences[]
 }
+
+model preferences {
+  preference_id String    @id @db.Uuid
+  name          String?   @db.VarChar(250)
+  coaches       coaches[]
+  sports        sports[]
+}
+
+// model coaches_preferences {
+//   coaches_preferences_id String      @id @db.Uuid
+//   coach                  coaches     @relation(fields: [coach_id], references: [coach_id])
+//   coach_id               String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+//   preference             preferences @relation(fields: [preference_id], references: [preference_id])
+//   preference_id          String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+// }
+
+// model sports_preferences {
+//   sports_preferences_id String      @id @db.Uuid
+//   sport                 sports      @relation(fields: [sport_id], references: [sport_id])
+//   sport_id              String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+//   preference            preferences @relation(fields: [preference_id], references: [preference_id])
+//   preference_id         String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+// }
