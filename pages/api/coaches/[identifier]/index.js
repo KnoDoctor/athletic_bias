@@ -17,7 +17,11 @@ export default async function handle(req, res) {
                     where: {
                         coach_id: identifier,
                     },
-                    select: { coach_id: true, email: true, first_name: true },
+                    //select: { coach_id: true, email: true, first_name: true },
+                    include: {
+                        preferences: { include: { preference: true } },
+                        sport: true,
+                    },
                 });
 
                 if (coach) {

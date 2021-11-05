@@ -7,46 +7,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model responses {
+  response_id           String    @id @db.Uuid
+  coach_id              String?   @db.Uuid
+  athlete_id            String?   @db.Uuid
+  bias_id               String?   @db.Uuid
+  coach                 coaches?  @relation(fields: [coach_id], references: [coach_id], onDelete: NoAction, onUpdate: NoAction, map: "response_coach_id")
+  athlete               athletes? @relation(fields: [athlete_id], references: [athlete_id], onDelete: NoAction, onUpdate: NoAction, map: "response_athlete_id")
+  bias                  biases?   @relation(fields: [bias_id], references: [bias_id], onDelete: NoAction, onUpdate: NoAction, map: "response_bias_id")
+  likelihood_to_recruit Int
+}
+
 model coaches {
-  first_name      String?       @db.VarChar(250)
-  coach_id        String        @id @db.Uuid
-  email           String?       @unique @db.VarChar(100)
-  last_name       String?       @db.VarChar(250)
-  date_of_birth   DateTime?     @db.Date
-  gender_identity String?       @db.VarChar(100)
-  education_level String?       @db.VarChar(100)
-  sport_id        String?       @db.Uuid
+  coach_id        String                @id @db.Uuid
+  email           String?               @unique @db.VarChar(100)
+  first_name      String?               @db.VarChar(250)
+  last_name       String?               @db.VarChar(250)
+  date_of_birth   DateTime?             @db.Date
+  gender_identity String?               @db.VarChar(100)
+  education_level String?               @db.VarChar(100)
+  sport_id        String?               @db.Uuid
   has_consented   Boolean?
-  sport           sports?       @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
-  preferences     preferences[]
+  sport           sports?               @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
+  preferences     coaches_preferences[]
+  responses       responses[]
+}
+
+model athletes {
+  athlete_id      String      @id @db.Uuid
+  email           String?     @unique @db.VarChar(100)
+  first_name      String?     @db.VarChar(250)
+  last_name       String?     @db.VarChar(250)
+  date_of_birth   DateTime?   @db.Date
+  gender_identity String?     @db.VarChar(100)
+  education_level String?     @db.VarChar(100)
+  has_consented   Boolean?
+  sport_id        String?     @db.Uuid
+  sport           sports?     @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "athlete_sport_id")
+  responses       responses[]
 }
 
 model sports {
-  sport_id    String        @id @db.Uuid
-  name        String?       @db.VarChar(250)
+  sport_id    String               @id @db.Uuid
+  name        String?              @db.VarChar(250)
   coaches     coaches[]
-  preferences preferences[]
+  athletes    athletes[]
+  preferences sports_preferences[]
+  biases      sports_biases[]
 }
 
 model preferences {
-  preference_id String    @id @db.Uuid
-  name          String?   @db.VarChar(250)
-  coaches       coaches[]
-  sports        sports[]
+  preference_id String                @id @db.Uuid
+  name          String?               @db.VarChar(250)
+  coaches       coaches_preferences[]
+  sports        sports_preferences[]
 }
 
-// model coaches_preferences {
-//   coaches_preferences_id String      @id @db.Uuid
-//   coach                  coaches     @relation(fields: [coach_id], references: [coach_id])
-//   coach_id               String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
-//   preference             preferences @relation(fields: [preference_id], references: [preference_id])
-//   preference_id          String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
-// }
+model biases {
+  bias_id   String          @id @db.Uuid
+  name      String?         @db.VarChar(250)
+  sports    sports_biases[]
+  responses responses[]
+}
 
-// model sports_preferences {
-//   sports_preferences_id String      @id @db.Uuid
-//   sport                 sports      @relation(fields: [sport_id], references: [sport_id])
-//   sport_id              String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
-//   preference            preferences @relation(fields: [preference_id], references: [preference_id])
-//   preference_id         String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
-// }
+model coaches_preferences {
+  coaches_preferences_id String      @id @db.Uuid
+  coach                  coaches     @relation(fields: [coach_id], references: [coach_id])
+  coach_id               String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+  preference             preferences @relation(fields: [preference_id], references: [preference_id])
+  preference_id          String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+}
+
+model sports_preferences {
+  sports_preferences_id String      @id @db.Uuid
+  sport                 sports      @relation(fields: [sport_id], references: [sport_id])
+  sport_id              String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+  preference            preferences @relation(fields: [preference_id], references: [preference_id])
+  preference_id         String      @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+}
+
+model sports_biases {
+  sports_biases_id String @id @db.Uuid
+  sport            sports @relation(fields: [sport_id], references: [sport_id])
+  sport_id         String @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+  bias             biases @relation(fields: [bias_id], references: [bias_id])
+  bias_id          String @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+}

@@ -15,7 +15,7 @@ export default async function handle(req, res) {
 
     async function getCoaches() {
         try {
-            const allUsers = await prisma.coaches.findMany({
+            const allCoaches = await prisma.coaches.findMany({
                 // select: {
                 //     coach_id: true,
                 //     email: true,
@@ -25,14 +25,23 @@ export default async function handle(req, res) {
                 // },
 
                 include: {
-                    preferences: true,
+                    preferences: { include: { preference: true } },
                     sport: true,
                 },
             });
 
+            let finalResult = allCoaches.map((coach) => {
+                return {
+                    ...coach,
+                    preferences: coach.preferences.map(
+                        (preference) => preference.preference
+                    ),
+                };
+            });
+
             res.status(200).json({
                 success: true,
-                data: allUsers,
+                data: finalResult,
             });
         } catch (error) {
             console.log(error);
