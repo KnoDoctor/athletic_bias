@@ -10,28 +10,23 @@ export default async function handle(req, res) {
     switch (method) {
         case "GET":
             try {
-                let coach;
+                let preference;
 
-                coach = await prisma.coaches.findUnique({
+                preference = await prisma.preferences.findUnique({
                     where: {
-                        coach_id: identifier,
-                    },
-                    //select: { coach_id: true, email: true, first_name: true },
-                    include: {
-                        preferences: { include: { preference: true } },
-                        sport: true,
+                        preference_id: identifier,
                     },
                 });
 
-                if (coach) {
+                if (preference) {
                     res.status(200).json({
                         success: true,
-                        data: coach,
+                        data: preference,
                     });
                 } else {
                     res.status(404).json({
                         success: false,
-                        data: coach,
+                        data: preference,
                     });
                 }
             } catch (error) {
@@ -46,21 +41,20 @@ export default async function handle(req, res) {
 
         case "PATCH":
             try {
-                const { first_name, email } = req.body;
+                const { name } = req.body;
 
-                const patchedPost = await prisma.coaches.update({
+                const patchedPreference = await prisma.preferences.update({
                     where: {
-                        coach_id: identifier,
+                        preference_id: identifier,
                     },
                     data: {
-                        first_name,
-                        email,
+                        name,
                     },
                 });
 
                 res.status(200).json({
                     success: true,
-                    data: patchedPost,
+                    data: patchedPreference,
                 });
             } catch (error) {
                 console.log(error);
@@ -74,9 +68,9 @@ export default async function handle(req, res) {
 
         case "DELETE":
             try {
-                const deletedPost = await prisma.coaches.delete({
+                const deletedPreference = await prisma.preferences.delete({
                     where: {
-                        coach_id: identifier,
+                        preference_id: identifier,
                     },
                 });
 

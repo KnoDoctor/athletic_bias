@@ -10,28 +10,26 @@ export default async function handle(req, res) {
     switch (method) {
         case "GET":
             try {
-                let coach;
+                let athlete;
 
-                coach = await prisma.coaches.findUnique({
+                athlete = await prisma.athletes.findUnique({
                     where: {
-                        coach_id: identifier,
+                        athlete_id: identifier,
                     },
-                    //select: { coach_id: true, email: true, first_name: true },
                     include: {
-                        preferences: { include: { preference: true } },
                         sport: true,
                     },
                 });
 
-                if (coach) {
+                if (athlete) {
                     res.status(200).json({
                         success: true,
-                        data: coach,
+                        data: athlete,
                     });
                 } else {
                     res.status(404).json({
                         success: false,
-                        data: coach,
+                        data: athlete,
                     });
                 }
             } catch (error) {
@@ -48,9 +46,9 @@ export default async function handle(req, res) {
             try {
                 const { first_name, email } = req.body;
 
-                const patchedPost = await prisma.coaches.update({
+                const patchedPost = await prisma.athletes.update({
                     where: {
-                        coach_id: identifier,
+                        athlete_id: identifier,
                     },
                     data: {
                         first_name,
@@ -74,9 +72,9 @@ export default async function handle(req, res) {
 
         case "DELETE":
             try {
-                const deletedPost = await prisma.coaches.delete({
+                const deletedPost = await prisma.athletes.delete({
                     where: {
-                        coach_id: identifier,
+                        athlete_id: identifier,
                     },
                 });
 
