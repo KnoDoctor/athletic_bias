@@ -46,7 +46,13 @@ export default async function handle(req, res) {
 
         case "PATCH":
             try {
-                const { first_name, email } = req.body;
+                const {
+                    first_name,
+                    last_name,
+                    email,
+                    date_of_birth,
+                    education_level,
+                } = req.body;
 
                 const patchedPost = await prisma.coaches.update({
                     where: {
@@ -54,7 +60,10 @@ export default async function handle(req, res) {
                     },
                     data: {
                         first_name,
+                        last_name,
                         email,
+                        date_of_birth,
+                        education_level,
                     },
                 });
 

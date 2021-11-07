@@ -12,6 +12,7 @@
         "@mui/material": "^5.0.6",
         "@prisma/client": "^3.3.0",
         "clsx": "latest",
+        "date-fns": "^2.25.0",
         "embla-carousel": "^5.0.1",
         "env-cmd": "^10.1.0",
         "html-react-parser": "^1.4.0",
