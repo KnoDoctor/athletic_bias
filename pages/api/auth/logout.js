@@ -1,8 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
 import { serialize } from "cookie";
-import { authenticateToken, generateRefreshToken } from "../../../utils/tokens";
-import { generateGuid } from "../../../utils/uuids";
+import { authenticateToken } from "../../../utils/tokens";
 import { getCookies } from "../../../utils/cookies";
 
 const prisma = new PrismaClient();
@@ -21,7 +19,6 @@ export default async function handle(req, res) {
             res.setHeader(
                 "Set-Cookie",
                 serialize("refreshToken", "deleted", {
-                    // "sameSite": 'strict',
                     path: "/",
                     expires: new Date(),
                 })
