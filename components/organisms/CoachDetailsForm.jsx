@@ -5,9 +5,11 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 
 import Button from "../atoms/Button";
-import TextField from "../atoms/TextInput";
+import TextInput from "../atoms/TextInput";
 import BasicDatePicker from "../molecules/DatePicker";
 import BasicSelect from "../molecules/Select";
+
+import PlacesAutocomplete from "../molecules/PlacesAutocomplete";
 
 export default function CoachDetailsForm({ coachId }) {
     const router = useRouter();
@@ -15,10 +17,8 @@ export default function CoachDetailsForm({ coachId }) {
     const [loading, setLoading] = useState(false);
     const [educationLevel, setEducationLevel] = useState(null);
     const [dateOfBirth, setDateOfBirth] = useState(null);
-
-    function handleEducationLevelChange(e) {
-        setEducationLevelValue(e.target.value);
-    }
+    const [cityOfBirth, setCityOfBirth] = useState(null);
+    const [cityOfResidence, setCityOfResidence] = useState(null);
 
     function handleContinueClick(e) {
         e.preventDefault();
@@ -77,6 +77,16 @@ export default function CoachDetailsForm({ coachId }) {
                         { name: "Graduate", value: "Graduate" },
                         { name: "Doctorate", value: "Doctorate" },
                     ]}
+                />
+                <PlacesAutocomplete
+                    label="What city/ town did you grow up in?"
+                    value={cityOfBirth}
+                    setValue={setCityOfBirth}
+                />
+                <PlacesAutocomplete
+                    label="What city/ town do you currently reside in?"
+                    value={cityOfResidence}
+                    setValue={setCityOfResidence}
                 />
 
                 <Button

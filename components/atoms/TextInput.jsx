@@ -3,11 +3,20 @@ import MUIInputLabel from "@mui/material/InputLabel";
 import MUIOutlinedInput from "@mui/material/OutlinedInput";
 import MUIFormControl from "@mui/material/FormControl";
 
-const TextInput = ({ id, type, label, value, onChange, endAdornment }) => {
+const TextInput = ({
+    id,
+    type,
+    label,
+    value,
+    onChange,
+    endAdornment,
+    inputRef,
+}) => {
     return (
         <MUIFormControl style={{ margin: "1rem 0", width: "100%" }}>
             <MUIInputLabel>{label}</MUIInputLabel>
             <MUIOutlinedInput
+                inputRef={inputRef}
                 id={id}
                 type={type}
                 label={label}
@@ -23,6 +32,8 @@ export default TextInput;
 
 {
     /* <OutlinedInput
+            placeholder="Some String"
+            inputRef=autocompleteRef
             id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}

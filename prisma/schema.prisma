@@ -93,3 +93,17 @@ model sports_biases {
   bias             biases @relation(fields: [bias_id], references: [bias_id])
   bias_id          String @db.Uuid // relation scalar field (used in the `@relation` attribute above)
 }
+
+model users {
+  user_id  String @id @db.Uuid
+  email    String @db.VarChar(250)
+  password String @db.VarChar(500)
+}
+
+model tokens {
+  token_id    String    @id @db.Uuid
+  token       String    @db.VarChar(500)
+  expiry_date DateTime? @db.Date
+  parent_id   String    @db.Uuid
+  user_id     String    @db.Uuid
+}

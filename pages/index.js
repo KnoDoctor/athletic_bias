@@ -3,9 +3,8 @@ import Link from "next/link";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import Copyright from "../src/Copyright";
-
 import Button from "../components/atoms/Button";
+
 export default function Index() {
     return (
         <Container maxWidth="sm">

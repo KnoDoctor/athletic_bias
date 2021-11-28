@@ -1,18 +1,22 @@
-export function parseJwtPayload(token) {
-    if (token) {
-        var base64Url = token.split(".")[1];
-        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        var jsonPayload = decodeURIComponent(
-            atob(base64)
-                .split("")
-                .map(function (c) {
-                    return (
-                        "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
-                    );
-                })
-                .join("")
-        );
+const jwt = require("jsonwebtoken");
 
-        return JSON.parse(jsonPayload);
+export function authenticateToken(token) {
+    if (token == null) return null;
+
+    return jwt.verify(
+        token,
+        process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET,
+        (err, user) => {
+            if (err) return null;
+            return user;
+        }
+    );
+}
+
+export function generateRefreshToken(user) {
+    if (!user) {
+        throw new Error("No user provided");
     }
+
+    return jwt.sign(user, process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET);
 }
