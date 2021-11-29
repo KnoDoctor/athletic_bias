@@ -13,6 +13,16 @@ export function authenticateToken(token) {
     );
 }
 
+export function generateAccessToken(user) {
+    if (!user) {
+        throw new Error("No user provided");
+    }
+
+    return jwt.sign(user, process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET, {
+        expiresIn: "30s",
+    });
+}
+
 export function generateRefreshToken(user) {
     if (!user) {
         throw new Error("No user provided");

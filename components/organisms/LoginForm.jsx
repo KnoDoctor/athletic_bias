@@ -43,7 +43,7 @@ const LoginForm = () => {
 
     const login = async () => {
         setLoading(true);
-        let loginRes = await fetch("http://localhost:2758/v1/users/login", {
+        let loginRes = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST", // or 'PUT'
             headers: {
                 "Content-Type": "application/json",
@@ -63,9 +63,9 @@ const LoginForm = () => {
             return;
         }
 
-        localStorage.setItem("refreshToken", loginData.refreshToken);
+        // localStorage.setItem("refreshToken", loginData.refreshToken);
         localStorage.setItem("accessToken", loginData.accessToken);
-        localStorage.setItem("idToken", loginData.idToken);
+        // localStorage.setItem("idToken", loginData.idToken);
         localStorage.setItem("loggedIn", true);
         setLoading(false);
         console.log("Login Successful");

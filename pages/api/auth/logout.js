@@ -29,9 +29,15 @@ export default async function handle(req, res) {
                     message: "No token provided with request",
                 });
 
-            const deletedToken = await prisma.tokens.delete({
+            await prisma.tokens.delete({
                 where: {
                     token_id: authenticateToken(refreshToken).token_id,
+                },
+            });
+
+            await prisma.tokens.deleteMany({
+                where: {
+                    parent_id: authenticateToken(refreshToken).parent_id,
                 },
             });
 

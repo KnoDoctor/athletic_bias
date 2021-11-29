@@ -1,7 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { serialize } from "cookie";
-import { generateRefreshToken } from "../../../utils/tokens";
+import {
+    generateRefreshToken,
+    generateAccessToken,
+} from "../../../utils/tokens";
 import { generateGuid } from "../../../utils/uuids";
 
 const prisma = new PrismaClient();
@@ -23,9 +26,10 @@ export default async function handle(req, res) {
 
             if (await bcrypt.compare(req.body.password, user[0].password)) {
                 let token_id = generateGuid();
-                // const accessToken = generateAccessToken({
-                //     email: user.data.email,
-                // });
+                let parent_id = generateGuid();
+                const accessToken = generateAccessToken({
+                    email: user[0].email,
+                });
                 // const idToken = generateIdToken(user.data);
                 const expiryDate = new Date(
                     Date.now() +
@@ -34,6 +38,7 @@ export default async function handle(req, res) {
                 const refreshToken = generateRefreshToken({
                     email: user[0].email,
                     token_id,
+                    parent_id,
                 });
 
                 await prisma.tokens.create({
@@ -41,27 +46,33 @@ export default async function handle(req, res) {
                         token_id: token_id,
                         token: refreshToken,
                         expiry_date: expiryDate,
-                        parent_id: generateGuid(),
+                        parent_id: parent_id,
                         user_id: user[0].user_id,
                     },
                 });
 
                 res.status(200);
-                res.setHeader(
-                    "Set-Cookie",
+                res.setHeader("Set-Cookie", [
                     serialize("refreshToken", refreshToken, {
                         // "sameSite": 'strict',
                         path: "/",
                         expires: expiryDate,
                         httpOnly: true,
                         // "secure": true
-                    })
-                );
+                    }),
+                    serialize("accessToken", accessToken, {
+                        // "sameSite": 'strict',
+                        path: "/",
+                        expires: expiryDate,
+                        httpOnly: true,
+                        // "secure": true
+                    }),
+                ]);
 
                 res.send({
                     success: true,
                     message: "Login succeeded",
-                    // accessToken: accessToken,
+                    accessToken: accessToken,
                     // idToken: idToken,
                     refreshToken: refreshToken,
                 });
