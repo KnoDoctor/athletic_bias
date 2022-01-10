@@ -15,12 +15,15 @@ export default function Index() {
         data: false,
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [coach, setCoach] = useState(null);
     const [refreshToken, setRefreshToken] = useState("");
     const [idToken, setIdToken] = useState("");
     const [email, setEmail] = useState("");
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [posts, setPosts] = useState([]);
+
+    console.log(coach);
 
     const fetchAccessToken = async () => {
         setLoading({ ...loading, accessToken: true });
@@ -88,6 +91,7 @@ export default function Index() {
 
     useEffect(() => {
         setIsLoggedIn(localStorage.getItem("loggedIn"));
+        setCoach(JSON.parse(localStorage.getItem("coach")));
     }, []);
 
     // useEffect(() => {
@@ -104,18 +108,34 @@ export default function Index() {
     return (
         <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
-                <h1 style={{ textAlign: "center" }}>Welcome!</h1>
-                <Link href="/coaches/signup/consent">
-                    <a style={{ textDecoration: "none" }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                        >
-                            Click Me
-                        </Button>
-                    </a>
-                </Link>
+                <h1 style={{ textAlign: "center" }}>
+                    {coach ? `Welcome, ${coach.first_name}!` : "Welcome!"}
+                </h1>
+                {coach ? (
+                    <Link href="/surveys">
+                        <a style={{ textDecoration: "none" }}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                            >
+                                Complete Another Survey
+                            </Button>
+                        </a>
+                    </Link>
+                ) : (
+                    <Link href="/coaches/signup/consent">
+                        <a style={{ textDecoration: "none" }}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                            >
+                                Click Me
+                            </Button>
+                        </a>
+                    </Link>
+                )}
             </Box>
             <Box sx={{ my: 4 }}>
                 <Typography

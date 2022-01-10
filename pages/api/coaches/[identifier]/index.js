@@ -52,6 +52,9 @@ export default async function handle(req, res) {
                     email,
                     date_of_birth,
                     education_level,
+                    city_of_birth,
+                    city_of_residence,
+                    gender_identity,
                 } = req.body;
 
                 const patchedPost = await prisma.coaches.update({
@@ -64,6 +67,9 @@ export default async function handle(req, res) {
                         email,
                         date_of_birth,
                         education_level,
+                        city_of_birth,
+                        city_of_residence,
+                        gender_identity,
                     },
                 });
 

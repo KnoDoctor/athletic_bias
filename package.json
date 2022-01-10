@@ -35,6 +35,7 @@
         "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
     },
     "devDependencies": {
-        "prisma": "^3.5.0"
+        "prisma": "^3.5.0",
+        "typescript": "^4.5.2"
     }
 }

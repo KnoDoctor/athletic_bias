@@ -81,6 +81,7 @@ export default async function handle(req, res) {
                     first_name,
                     last_name,
                     email,
+                    has_consented: true,
                 },
             });
 

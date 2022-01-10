@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
+import Alert from "@mui/material/Alert";
 
 import Button from "../atoms/Button";
 import TextField from "../atoms/TextInput";
@@ -15,6 +16,7 @@ const CoachConsentForm = ({ setCoachId }) => {
     const [firstNameValue, setFirstNameValue] = useState(null);
     const [lastNameValue, setLastNameValue] = useState(null);
     const [emailValue, setEmailValue] = useState(null);
+    const [accessCodeValue, setAccessCodeValue] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [passwordValue, setPasswordValue] = useState(null);
@@ -52,6 +54,9 @@ const CoachConsentForm = ({ setCoachId }) => {
     function handleLastNameChange(e) {
         setLastNameValue(e.target.value);
     }
+    function handleAccessCodeChange(e) {
+        setAccessCodeValue(e.target.value);
+    }
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -60,6 +65,20 @@ const CoachConsentForm = ({ setCoachId }) => {
     };
 
     const createCoach = async () => {
+        const errorSetter = (errorObject) => {
+            switch (errorObject.code) {
+                case "P2002":
+                    return {
+                        code: "P2002",
+                        severity: "error",
+                        message:
+                            "A coach profile with that email already exists, use your access code to proceed to the survey",
+                    };
+
+                default:
+                    break;
+            }
+        };
         setLoading(true);
         let createCoachRes = await fetch(
             `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/coaches`,
@@ -79,7 +98,7 @@ const CoachConsentForm = ({ setCoachId }) => {
 
         if (!createCoachData.success) {
             setLoading(false);
-
+            setError(errorSetter(createCoachData.error));
             console.log(createCoachData);
             return;
         }
@@ -88,6 +107,51 @@ const CoachConsentForm = ({ setCoachId }) => {
 
         setLoading(false);
         router.push("/coaches/signup/details");
+    };
+
+    const authenicateCoach = async () => {
+        setLoading(true);
+        if (!accessCodeValue) return setLoading(false);
+        let authenticateCoachRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/coaches/authenticate`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: emailValue,
+                    accessCode: accessCodeValue,
+                }),
+            }
+        );
+        let authenticateCoachData = await authenticateCoachRes.json();
+        if (authenticateCoachData.data.length === 0) {
+            setError({
+                code: "IE0001",
+                severity: "info",
+                message: "We couldn't verify your account. Please try again.",
+            });
+            setLoading(false);
+            return;
+        }
+        if (authenticateCoachData.data.length > 1) {
+            setError({
+                code: "IE0002",
+                severity: "info",
+                message: "It appears we have a duplicate account on file.",
+            });
+            setLoading(false);
+            return;
+        }
+        setCoachId(authenticateCoachData.data[0].coach_id);
+        localStorage.setItem(
+            "coach",
+            JSON.stringify(authenticateCoachData.data[0])
+        );
+
+        setLoading(false);
+        router.push("/");
     };
 
     return (
@@ -101,6 +165,7 @@ const CoachConsentForm = ({ setCoachId }) => {
                     }}
                 >
                     <h2>Perceptions on Athlete Development</h2>
+
                     <TextField
                         id="firstName"
                         type={"text"}
@@ -122,24 +187,57 @@ const CoachConsentForm = ({ setCoachId }) => {
                         label="Email"
                         onChange={handleEmailChange}
                     />
-
-                    <Button
-                        variant="contained"
-                        color={"primary"}
-                        onClick={
-                            hasConsented
-                                ? handleContinueClick
-                                : handleViewConsentFormClick
-                        }
-                        loadingSettings={{
-                            loading,
-                        }}
-                    >
-                        {hasConsented
-                            ? "Continue to Survey"
-                            : "Review Consent Form"}
-                    </Button>
-                    {hasConsented ? (
+                    {error?.code === "P2002" || error?.code === "IE0001" ? (
+                        <TextField
+                            id="accessCode"
+                            type={"text"}
+                            value={accessCodeValue}
+                            label="Access Code"
+                            onChange={handleAccessCodeChange}
+                        />
+                    ) : (
+                        <></>
+                    )}
+                    {error?.code === "P2002" || error?.code === "IE0001" ? (
+                        <Button
+                            variant="contained"
+                            color={"primary"}
+                            onClick={() => authenicateCoach()}
+                            loadingSettings={{
+                                loading,
+                            }}
+                        >
+                            Continue to Survey
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            color={"primary"}
+                            onClick={
+                                hasConsented
+                                    ? handleContinueClick
+                                    : handleViewConsentFormClick
+                            }
+                            loadingSettings={{
+                                loading,
+                            }}
+                        >
+                            {hasConsented
+                                ? "Continue to Survey"
+                                : "Review Consent Form"}
+                        </Button>
+                    )}
+                    {error ? (
+                        <Alert
+                            sx={{ margin: "0 1rem 1rem" }}
+                            severity={error.severity}
+                        >
+                            {error.message}
+                        </Alert>
+                    ) : (
+                        <></>
+                    )}
+                    {hasConsented && !error ? (
                         <Box style={{ width: "70%", margin: "auto" }}>
                             <Button
                                 variant="outlined"
@@ -148,7 +246,7 @@ const CoachConsentForm = ({ setCoachId }) => {
                                 color="primary"
                                 onClick={handleViewConsentFormClick}
                             >
-                                Consent Form
+                                Review Consent Form
                             </Button>
                         </Box>
                     ) : (

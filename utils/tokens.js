@@ -6,9 +6,12 @@ export function authenticateToken(token) {
     return jwt.verify(
         token,
         process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET,
-        (err, user) => {
-            if (err) return null;
-            return user;
+        (err, data) => {
+            if (err) {
+                console.log(err);
+                return null;
+            }
+            return data;
         }
     );
 }

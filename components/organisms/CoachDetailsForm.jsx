@@ -16,9 +16,13 @@ export default function CoachDetailsForm({ coachId }) {
 
     const [loading, setLoading] = useState(false);
     const [educationLevel, setEducationLevel] = useState(null);
+    const [genderIdentity, setGenderIdentity] = useState(null);
     const [dateOfBirth, setDateOfBirth] = useState(null);
     const [cityOfBirth, setCityOfBirth] = useState(null);
     const [cityOfResidence, setCityOfResidence] = useState(null);
+
+    console.log(cityOfBirth);
+    console.log(cityOfResidence);
 
     function handleContinueClick(e) {
         e.preventDefault();
@@ -37,6 +41,9 @@ export default function CoachDetailsForm({ coachId }) {
                 body: JSON.stringify({
                     education_level: educationLevel,
                     date_of_birth: dateOfBirth,
+                    city_of_birth: cityOfBirth.description,
+                    city_of_residence: cityOfResidence.description,
+                    gender_identity: genderIdentity,
                 }),
             }
         );
@@ -66,6 +73,17 @@ export default function CoachDetailsForm({ coachId }) {
                 <BasicDatePicker
                     value={dateOfBirth}
                     setValue={setDateOfBirth}
+                />
+                <BasicSelect
+                    label="How do you identify?"
+                    value={genderIdentity}
+                    setValue={setGenderIdentity}
+                    options={[
+                        { name: "Male", value: "Male" },
+                        { name: "Female", value: "Female" },
+                        { name: "Graduate", value: "Graduate" },
+                        { name: "Doctorate", value: "Doctorate" },
+                    ]}
                 />
                 <BasicSelect
                     label="Highest level of education achieved?"
