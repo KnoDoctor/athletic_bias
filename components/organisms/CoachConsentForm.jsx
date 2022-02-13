@@ -80,20 +80,17 @@ const CoachConsentForm = ({ setCoachId }) => {
             }
         };
         setLoading(true);
-        let createCoachRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/coaches`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    first_name: firstNameValue,
-                    last_name: lastNameValue,
-                    email: emailValue,
-                }),
-            }
-        );
+        let createCoachRes = await fetch(`/api/coaches`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                first_name: firstNameValue,
+                last_name: lastNameValue,
+                email: emailValue,
+            }),
+        });
         let createCoachData = await createCoachRes.json();
 
         if (!createCoachData.success) {
@@ -112,19 +109,16 @@ const CoachConsentForm = ({ setCoachId }) => {
     const authenicateCoach = async () => {
         setLoading(true);
         if (!accessCodeValue) return setLoading(false);
-        let authenticateCoachRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/coaches/authenticate`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: emailValue,
-                    accessCode: accessCodeValue,
-                }),
-            }
-        );
+        let authenticateCoachRes = await fetch(`/api/coaches/authenticate`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: emailValue,
+                accessCode: accessCodeValue,
+            }),
+        });
         let authenticateCoachData = await authenticateCoachRes.json();
         if (authenticateCoachData.data.length === 0) {
             setError({

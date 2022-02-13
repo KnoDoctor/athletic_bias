@@ -29,9 +29,7 @@ export default function CoachPreferencesForm({ coachId }) {
     }
 
     const getSportsOptions = async () => {
-        let sportsRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/sports`
-        );
+        let sportsRes = await fetch(`/api/sports`);
 
         let sports = await sportsRes.json();
 
@@ -48,7 +46,7 @@ export default function CoachPreferencesForm({ coachId }) {
     const getSportPreferences = async () => {
         if (!selectedSport) return;
         let preferencesRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/preferences/sport/${selectedSport}`
+            `/api/preferences/sport/${selectedSport}`
         );
 
         let preferences = await preferencesRes.json();
@@ -65,23 +63,20 @@ export default function CoachPreferencesForm({ coachId }) {
 
     const updateCoach = async () => {
         setLoading(true);
-        let updateCoachRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/coaches/${coachId}`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    sport_id: selectedSport,
-                    hard_work_pref: hardWorkPreference,
-                    natural_pref: naturalPreference,
-                    preferences: selectedPreferences.map((preference) => ({
-                        preference_id: preference,
-                    })),
-                }),
-            }
-        );
+        let updateCoachRes = await fetch(`/api/coaches/${coachId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                sport_id: selectedSport,
+                hard_work_pref: hardWorkPreference,
+                natural_pref: naturalPreference,
+                preferences: selectedPreferences.map((preference) => ({
+                    preference_id: preference,
+                })),
+            }),
+        });
         let updateCoachData = await updateCoachRes.json();
 
         if (!updateCoachData.success) {

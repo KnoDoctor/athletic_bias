@@ -27,15 +27,12 @@ export default function Index() {
 
     const fetchAccessToken = async () => {
         setLoading({ ...loading, accessToken: true });
-        let accessTokenRes = await fetch(
-            "http://localhost:3000/api/auth/token",
-            {
-                method: "GET", // or 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        let accessTokenRes = await fetch("/api/auth/token", {
+            method: "GET", // or 'PUT'
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         let accessTokenData = await accessTokenRes.json();
 
         if (!accessTokenData.success) {
@@ -79,7 +76,7 @@ export default function Index() {
     };
 
     const logout = async () => {
-        let logoutRes = await fetch("http://localhost:3000/api/auth/logout");
+        let logoutRes = await fetch("/api/auth/logout");
         let logoutData = await logoutRes.json();
         console.log(logoutData);
         localStorage.setItem("loggedIn", false);

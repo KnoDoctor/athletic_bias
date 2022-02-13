@@ -31,22 +31,19 @@ export default function CoachDetailsForm({ coachId }) {
 
     const updateCoach = async () => {
         setLoading(true);
-        let updateCoachRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/coaches/${coachId}`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    education_level: educationLevel,
-                    date_of_birth: dateOfBirth,
-                    city_of_birth: cityOfBirth.description,
-                    city_of_residence: cityOfResidence.description,
-                    gender_identity: genderIdentity,
-                }),
-            }
-        );
+        let updateCoachRes = await fetch(`/api/coaches/${coachId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                education_level: educationLevel,
+                date_of_birth: dateOfBirth,
+                city_of_birth: cityOfBirth.description,
+                city_of_residence: cityOfResidence.description,
+                gender_identity: genderIdentity,
+            }),
+        });
         let updateCoachData = await updateCoachRes.json();
 
         if (!updateCoachData.success) {
@@ -81,8 +78,10 @@ export default function CoachDetailsForm({ coachId }) {
                     options={[
                         { name: "Male", value: "Male" },
                         { name: "Female", value: "Female" },
-                        { name: "Graduate", value: "Graduate" },
-                        { name: "Doctorate", value: "Doctorate" },
+                        {
+                            name: "Prefer Not To Say",
+                            value: "Prefer Not To Say",
+                        },
                     ]}
                 />
                 <BasicSelect

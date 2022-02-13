@@ -43,7 +43,7 @@ const LoginForm = () => {
 
     const login = async () => {
         setLoading(true);
-        let loginRes = await fetch("http://localhost:3000/api/auth/login", {
+        let loginRes = await fetch("/api/auth/login", {
             method: "POST", // or 'PUT'
             headers: {
                 "Content-Type": "application/json",
