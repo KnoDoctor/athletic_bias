@@ -3,18 +3,11 @@ import { useRouter } from "next/router";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import Radio from "@mui/material/Radio";
 
 import Button from "../atoms/Button";
 import BasicSelect from "../molecules/Select";
 import RadioButtons from "../molecules/RadioButtons";
 import Slider from "../molecules/Slider";
-
-import PlacesAutocomplete from "../molecules/PlacesAutocomplete";
 import ChipSelection from "../molecules/ChipSelection";
 
 export default function CoachPreferencesForm({ coachId }) {
@@ -22,16 +15,13 @@ export default function CoachPreferencesForm({ coachId }) {
 
     const [loading, setLoading] = useState(false);
     const [sportsOptions, setSportsOptions] = useState(null);
+    const [selectedSport, setSelectedSport] = useState("");
     const [sportPreferences, setSportPreferences] = useState(null);
-    const [selectedSport, setSelectedSport] = useState(null);
+    const [selectedPreferences, setSelectedPreferences] = useState([]);
     const [sliderValue, setSliderValue] = useState(0);
     const [hardWorkPreference, setHardWorkPreference] = useState(null);
     const [naturalPreference, setNaturalPreference] = useState(null);
     const [talentPreference, setTalentPreference] = useState(null);
-    // const [genderIdentity, setGenderIdentity] = useState(null);
-    // const [dateOfBirth, setDateOfBirth] = useState(null);
-    // const [cityOfBirth, setCityOfBirth] = useState(null);
-    // const [cityOfResidence, setCityOfResidence] = useState(null);
 
     function handleContinueClick(e) {
         e.preventDefault();
@@ -83,11 +73,12 @@ export default function CoachPreferencesForm({ coachId }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    education_level: educationLevel,
-                    date_of_birth: dateOfBirth,
-                    city_of_birth: cityOfBirth.description,
-                    city_of_residence: cityOfResidence.description,
-                    gender_identity: genderIdentity,
+                    sport_id: selectedSport,
+                    hard_work_pref: hardWorkPreference,
+                    natural_pref: naturalPreference,
+                    preferences: selectedPreferences.map((preference) => ({
+                        preference_id: preference,
+                    })),
                 }),
             }
         );
@@ -100,7 +91,7 @@ export default function CoachPreferencesForm({ coachId }) {
         }
 
         setLoading(false);
-        router.push("/coaches/signup/preferences");
+        router.push("/");
     };
 
     useEffect(() => {
@@ -109,16 +100,13 @@ export default function CoachPreferencesForm({ coachId }) {
 
     useEffect(() => {
         getSportPreferences();
+        setSelectedPreferences([]);
     }, [selectedSport]);
 
     useEffect(() => {
         setHardWorkPreference(50 - sliderValue);
         setNaturalPreference(50 + sliderValue);
     }, [sliderValue]);
-
-    console.log(sportPreferences);
-    console.log(hardWorkPreference);
-    console.log(naturalPreference);
 
     return (
         <Card elevation={5}>
@@ -141,6 +129,8 @@ export default function CoachPreferencesForm({ coachId }) {
                     <>
                         <ChipSelection
                             label={`Please select the characteristics that an athlete in your sport of expertise needs to have to be sucessful.`}
+                            value={selectedPreferences}
+                            setValue={setSelectedPreferences}
                             options={sportPreferences}
                         />
                         <Slider

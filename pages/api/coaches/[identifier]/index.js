@@ -58,6 +58,8 @@ export default async function handle(req, res) {
                     city_of_residence,
                     gender_identity,
                     sport_id,
+                    natural_pref,
+                    hard_work_pref,
                     preferences,
                 } = req.body;
 
@@ -94,6 +96,8 @@ export default async function handle(req, res) {
                         city_of_residence,
                         gender_identity,
                         sport_id,
+                        natural_pref,
+                        hard_work_pref,
                         preferences: {
                             create: buildPreferencesArray(preferences),
                             //[

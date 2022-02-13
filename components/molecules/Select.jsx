@@ -19,15 +19,13 @@ export default function BasicSelect({ label, value, setValue, options }) {
                 onChange={handleChange}
                 style={{ textAlign: "left" }}
             >
-                {options ? (
-                    options.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.name}
-                        </MenuItem>
-                    ))
-                ) : (
-                    <></>
-                )}
+                {options
+                    ? options.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                              {option.name}
+                          </MenuItem>
+                      ))
+                    : []}
             </Select>
         </FormControl>
     );

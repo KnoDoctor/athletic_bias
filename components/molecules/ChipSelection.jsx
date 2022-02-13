@@ -5,9 +5,18 @@ import FormControl from "@mui/material/FormControl";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
-const ChipSelection = ({ label, options }) => {
-    const handleClick = () => {
-        console.info("You clicked the Chip.");
+const ChipSelection = ({ label, value, setValue, options }) => {
+    const handleClick = (clickedValue) => {
+        let newValue = [...value];
+
+        if (newValue.indexOf(clickedValue) != -1) {
+            return setValue(
+                newValue.filter((selections) => selections != clickedValue)
+            );
+        }
+
+        newValue.push(clickedValue);
+        return setValue(newValue);
     };
 
     return (
@@ -19,7 +28,17 @@ const ChipSelection = ({ label, options }) => {
                 sx={{ marginTop: "1.333rem", justifyContent: "center" }}
             >
                 {options.map((option) => (
-                    <Chip label={option.name} onClick={handleClick} />
+                    <Chip
+                        key={option.value}
+                        label={option.name}
+                        onClick={() => handleClick(option.value)}
+                        color="primary"
+                        variant={
+                            value.indexOf(option.value) != -1
+                                ? "filled"
+                                : "outlined"
+                        }
+                    />
                 ))}
             </Stack>
         </FormControl>
