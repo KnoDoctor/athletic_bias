@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+import { generateGuid } from "../../../../utils/uuids";
+
 export default async function handle(req, res) {
     const {
         query: { identifier },
@@ -55,7 +57,28 @@ export default async function handle(req, res) {
                     city_of_birth,
                     city_of_residence,
                     gender_identity,
+                    sport_id,
+                    preferences,
                 } = req.body;
+
+                const buildPreferencesArray = (preferences) => {
+                    if (!preferences) return [];
+
+                    let array = [];
+
+                    preferences.map((preference) => {
+                        array.push({
+                            preference: {
+                                connect: {
+                                    preference_id: preference.preference_id,
+                                },
+                            },
+                            coaches_preferences_id: generateGuid(),
+                        });
+                    });
+
+                    return array;
+                };
 
                 const patchedPost = await prisma.coaches.update({
                     where: {
@@ -70,6 +93,20 @@ export default async function handle(req, res) {
                         city_of_birth,
                         city_of_residence,
                         gender_identity,
+                        sport_id,
+                        preferences: {
+                            create: buildPreferencesArray(preferences),
+                            //[
+                            // {
+                            //     preference: {
+                            //         connect: {
+                            //             preference_id:
+                            //                 "c5fe206c-e0fa-4ed9-b795-854f3b2f6f71",
+                            //         },
+                            //     },
+                            // },
+                            // ],
+                        },
                     },
                 });
 

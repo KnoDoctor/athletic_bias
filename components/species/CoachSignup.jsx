@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CoachDetailsForm from "../organisms/CoachDetailsForm";
 import CoachConsentForm from "../organisms/CoachConsentForm";
+import CoachPreferencesForm from "../organisms/CoachPreferencesForm";
 
 const CoachSignup = ({ step }) => {
     const [coachId, setCoachId] = useState(null);
@@ -12,6 +13,8 @@ const CoachSignup = ({ step }) => {
                 return <CoachConsentForm setCoachId={setCoachId} />;
             case "details":
                 return <CoachDetailsForm coachId={coachId} />;
+            case "preferences":
+                return <CoachPreferencesForm coachId={coachId} />;
 
             default:
                 return (
