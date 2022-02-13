@@ -84,7 +84,7 @@ export default function CoachPreferencesForm({ coachId }) {
             console.log(updateCoachData);
             return;
         }
-
+        localStorage.setItem("coach", JSON.stringify(updateCoachData.data));
         setLoading(false);
         router.push("/");
     };
