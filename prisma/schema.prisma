@@ -31,8 +31,8 @@ model coaches {
   access_code       String?               @db.VarChar(10)
   city_of_birth     String?               @db.VarChar(150)
   city_of_residence String?               @db.VarChar(150)
-  hard_work_pref    Int?                  @db.Integer
-  natural_pref      Int?                  @db.Integer
+  hard_work_pref    Int?
+  natural_pref      Int?
   sport             sports?               @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
   preferences       coaches_preferences[]
   responses         responses[]
