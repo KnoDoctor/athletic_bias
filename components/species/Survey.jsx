@@ -14,7 +14,7 @@ import LikelihoodToRecruitRadio from "../n_cells/LikelihoodToRecruitRadio";
 const Survey = () => {
     return (
         <Card elevation={5}>
-            <div
+            {/* <div
                 style={{ width: "100%", height: "25vh", position: "relative" }}
             >
                 <Image
@@ -23,7 +23,7 @@ const Survey = () => {
                     layout="fill"
                     objectFit="cover"
                 />
-            </div>
+            </div> */}
             <Box
                 style={{
                     width: "90%",
@@ -31,16 +31,16 @@ const Survey = () => {
                 }}
             >
                 <Grid container my={3}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Avatar
                             alt="Remy Sharp"
-                            src="/images/profile-pictures/soccer-player.jpg"
-                            sx={{ width: 56, height: 56 }}
+                            src="/images/profile-pictures/soccer-player-1.jpg"
+                            sx={{ width: 128, height: 128 }}
                         />
                     </Grid>
                     <Grid item>
                         <h2 style={{ margin: 0 }}>Jimmy Athlete</h2>
-                        <h5 style={{ margin: 0 }}>Forward</h5>
+                        <h4 style={{ margin: 0 }}>Forward</h4>
                     </Grid>
                 </Grid>
                 <AthleteOverview />
@@ -66,7 +66,12 @@ const Survey = () => {
                         alias temporibus perspiciatis officiis incidunt quasi!
                     </p>
                 </Box>
-                <LikelihoodToRecruitRadio />
+                <Box>
+                    <h3>Likelihood to recruit?</h3>
+                    <LikelihoodToRecruitRadio />
+                    <h3>Likelihood to succeed?</h3>
+                    <LikelihoodToRecruitRadio />
+                </Box>
                 <Link href="/">
                     <a style={{ textDecoration: "none" }}>
                         <Button

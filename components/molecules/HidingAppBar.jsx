@@ -33,7 +33,7 @@ export default function HidingAppBar(props) {
                 <AppBar>
                     <Toolbar>
                         <Typography variant="h6" component="div">
-                            Athletic Bias
+                            Take Your Pick
                         </Typography>
                     </Toolbar>
                 </AppBar>
