@@ -1,19 +1,16 @@
 import React from "react";
-import Link from "../../src/Link";
-import Button from "../../components/atoms/Button";
+
+import { Container, Box } from "@mui/material";
+
+import Survey from "../../components/species/Survey";
 
 const index = () => {
     return (
-        <div>
-            <>Surveys</>
-            <Link href="/">
-                <a style={{ textDecoration: "none" }}>
-                    <Button variant="contained" color="primary" size="small">
-                        Home
-                    </Button>
-                </a>
-            </Link>
-        </div>
+        <Container maxWidth="sm">
+            <Box sx={{ my: 4 }}>
+                <Survey />
+            </Box>
+        </Container>
     );
 };
 
