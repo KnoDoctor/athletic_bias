@@ -106,7 +106,9 @@ export default function Index() {
         <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
                 <h1 style={{ textAlign: "center" }}>
-                    {coach ? `Welcome, ${coach.first_name}!` : "Welcome!"}
+                    {coach
+                        ? `Welcome, ${coach.first_name}!`
+                        : "Welcome, please click below to get started."}
                 </h1>
                 {coach ? (
                     <Link href="/surveys">
@@ -134,7 +136,7 @@ export default function Index() {
                     </Link>
                 )}
             </Box>
-            <Box sx={{ my: 4 }}>
+            {/* <Box sx={{ my: 4 }}>
                 <Typography
                     variant="h4"
                     component="h1"
@@ -212,7 +214,7 @@ export default function Index() {
                         <Button variant="contained">Login</Button>
                     </Link>
                 )}
-            </Box>
+            </Box> */}
         </Container>
     );
 }

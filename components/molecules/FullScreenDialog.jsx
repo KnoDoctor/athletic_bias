@@ -46,7 +46,7 @@ export default function FullScreenDialog({
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Container maxWidth="sm">
+                <Container maxWidth="md">
                     <Box sx={{ my: 4 }}>
                         <Card elevation={5}>{children}</Card>
                     </Box>

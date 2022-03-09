@@ -12,7 +12,7 @@ const style = {
 
 export default function AthleteOverview() {
     return (
-        <List sx={style} component="nav" aria-label="mailbox folders">
+        <List sx={style} aria-label="mailbox folders">
             <Divider />
             <ListItem button>
                 <Grid container>
