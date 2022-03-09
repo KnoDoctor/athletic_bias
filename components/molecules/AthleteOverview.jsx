@@ -10,10 +10,14 @@ const style = {
     bgcolor: "background.paper",
 };
 
-export default function AthleteOverview() {
+export default function AthleteOverview({
+    athleteAge,
+    athleteHeight,
+    athleteWeight,
+}) {
     return (
         <List sx={style} aria-label="mailbox folders">
-            <Divider />
+            {/* <Divider />
             <ListItem button>
                 <Grid container>
                     <Grid item xs={6}>
@@ -34,15 +38,15 @@ export default function AthleteOverview() {
                         <p style={{ margin: 0 }}>67</p>
                     </Grid>
                 </Grid>
-            </ListItem>
-            <Divider />
+            </ListItem> */}
+            {/* <Divider /> */}
             <ListItem button>
                 <Grid container>
                     <Grid item xs={6}>
                         <p style={{ margin: 0 }}>Age:</p>
                     </Grid>
                     <Grid item xs={6}>
-                        <p style={{ margin: 0 }}>18</p>
+                        <p style={{ margin: 0 }}>{athleteAge}</p>
                     </Grid>
                 </Grid>
             </ListItem>
@@ -53,7 +57,7 @@ export default function AthleteOverview() {
                         <p style={{ margin: 0 }}>Height:</p>
                     </Grid>
                     <Grid item xs={6}>
-                        <p style={{ margin: 0 }}>182 cm</p>
+                        <p style={{ margin: 0 }}>{athleteHeight} cm</p>
                     </Grid>
                 </Grid>
             </ListItem>
@@ -64,7 +68,7 @@ export default function AthleteOverview() {
                         <p style={{ margin: 0 }}>Weight:</p>
                     </Grid>
                     <Grid item xs={6}>
-                        <p style={{ margin: 0 }}>78 kg</p>
+                        <p style={{ margin: 0 }}>{athleteWeight} kg</p>
                     </Grid>
                 </Grid>
             </ListItem>

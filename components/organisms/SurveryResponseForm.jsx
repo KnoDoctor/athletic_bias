@@ -5,7 +5,7 @@ import SurveyResponseRadio from "../n_cells/SurveyResponseRadio";
 import Link from "../../src/Link";
 import Button from "../../components/atoms/Button";
 
-const SurveryResponseForm = () => {
+const SurveryResponseForm = ({ athleteProfileIndex, handleNextClick }) => {
     return (
         <>
             <SurveyResponseRadio
@@ -28,13 +28,22 @@ const SurveryResponseForm = () => {
                     { label: "Will succeed", value: 4 },
                 ]}
             />
-            <Link href="/">
-                <a style={{ textDecoration: "none" }}>
+            {athleteProfileIndex < 2 ? (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={handleNextClick}
+                >
+                    Next Athlete
+                </Button>
+            ) : (
+                <Link href="/">
                     <Button variant="contained" color="primary" size="small">
-                        Submit
+                        Complete Survey
                     </Button>
-                </a>
-            </Link>
+                </Link>
+            )}
         </>
     );
 };
