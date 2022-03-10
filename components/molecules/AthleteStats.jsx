@@ -11,6 +11,23 @@ const style = {
 };
 
 export default function AthleteStats({ stats }) {
+    const calcColor = (stat) => {
+        let groupMeanVariance = (stat.value - stat.mean).toFixed(2);
+
+        if (stat.negativeBeatsMean && groupMeanVariance <= 0) {
+            return "green";
+        }
+        if (stat.negativeBeatsMean && groupMeanVariance > 0) {
+            return "red";
+        }
+        if (groupMeanVariance >= 0) {
+            return "green";
+        }
+        if (groupMeanVariance < 0) {
+            return "red";
+        }
+    };
+
     return (
         <List sx={style} aria-label="mailbox folders">
             <h3>Athlete Stats</h3>
@@ -23,9 +40,7 @@ export default function AthleteStats({ stats }) {
                         <p style={{ margin: 0, fontWeight: "600" }}>Value</p>
                     </Grid>
                     <Grid item xs={3}>
-                        <p style={{ margin: 0, fontWeight: "600" }}>
-                            Group Mean
-                        </p>
+                        <p style={{ margin: 0, fontWeight: "600" }}>Variance</p>
                     </Grid>
                 </Grid>
             </ListItem>
@@ -39,7 +54,9 @@ export default function AthleteStats({ stats }) {
                                     <p style={{ margin: 0 }}>{stat.name}</p>
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <p style={{ margin: 0 }}>{stat.value}</p>
+                                    <p style={{ margin: 0 }}>
+                                        {stat.value} {stat.units}
+                                    </p>
                                 </Grid>
                                 <Grid item xs={3}>
                                     <p
@@ -47,14 +64,24 @@ export default function AthleteStats({ stats }) {
                                             margin: 0,
                                         }}
                                     >
-                                        {stat.mean}
-                                        <em style={{ fontSize: "14px" }}>
-                                            (
+                                        <span
+                                            style={{
+                                                color: calcColor(stat),
+                                            }}
+                                        >
                                             {(stat.value - stat.mean).toFixed(
                                                 2
-                                            )}
-                                            )
-                                        </em>
+                                            ) < 0
+                                                ? ""
+                                                : "+"}
+                                            {(stat.value - stat.mean).toFixed(
+                                                2
+                                            )}{" "}
+                                            {stat.units}
+                                        </span>
+                                        {/* <em style={{ fontSize: "14px" }}>
+                                            ({stat.mean})
+                                        </em> */}
                                     </p>
                                 </Grid>
                             </Grid>

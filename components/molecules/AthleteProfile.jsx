@@ -12,9 +12,16 @@ const AthleteProfileCard = ({ athletePhoto, athleteName, athletePosition }) => {
                     sx={{ width: 128, height: 128 }}
                 />
             </Grid>
-            <Grid item>
-                <h2 style={{ margin: 0 }}>{athleteName}</h2>
-                <h4 style={{ margin: 0 }}>{athletePosition}</h4>
+            <Grid
+                item
+                style={{
+                    flexDirection: "column",
+                    display: "flex",
+                    justifyContent: "center",
+                }}
+            >
+                <h1 style={{ margin: 0 }}>{athleteName}</h1>
+                <h3 style={{ margin: 0 }}>{athletePosition}</h3>
             </Grid>
         </Grid>
     );
