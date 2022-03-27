@@ -123,13 +123,13 @@ export default function CoachPreferencesForm({ coachId }) {
                 {sportPreferences ? (
                     <>
                         <ChipSelection
-                            label={`Please select the characteristics that an athlete in your sport of expertise needs to have to be sucessful.`}
+                            label={`In your opinion, what are the 3 most important attributes of talent in your sport?`}
                             value={selectedPreferences}
                             setValue={setSelectedPreferences}
                             options={sportPreferences}
                         />
                         <Slider
-                            label={`If you had to choose between selecting a player that was known to be a 'naturally talented' athlete or known to be a 'hard worker', what would be your preference?`}
+                            label={`If you had to choose between selecting a player that was known to be a 'natural' or a 'striver/hard worker', what would be your preference?`}
                             value={sliderValue}
                             setValue={setSliderValue}
                         />

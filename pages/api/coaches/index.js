@@ -54,7 +54,8 @@ export default async function handle(req, res) {
 
     async function createCoach() {
         try {
-            const { first_name, last_name, email } = req.body;
+            const { first_name, last_name, email, access_code, date_of_birth } =
+                req.body;
 
             if (!first_name) {
                 return res.status(400).json({
@@ -81,7 +82,10 @@ export default async function handle(req, res) {
                     first_name,
                     last_name,
                     email,
+                    date_of_birth,
+                    access_code,
                     has_consented: true,
+                    is_control: Math.random() < 0.5,
                 },
             });
 

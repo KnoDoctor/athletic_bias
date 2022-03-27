@@ -61,6 +61,11 @@ export default async function handle(req, res) {
                     natural_pref,
                     hard_work_pref,
                     preferences,
+                    years_of_experience,
+                    highest_level_coached,
+                    currently_coaching,
+                    last_age_coached,
+                    athlete_in_sport,
                 } = req.body;
 
                 const buildPreferencesArray = (preferences) => {
@@ -98,6 +103,11 @@ export default async function handle(req, res) {
                         sport_id,
                         natural_pref,
                         hard_work_pref,
+                        years_of_experience,
+                        highest_level_coached,
+                        currently_coaching,
+                        last_age_coached,
+                        athlete_in_sport,
                         preferences: {
                             create: buildPreferencesArray(preferences),
                             //[

@@ -13,7 +13,7 @@ const TextInput = ({
     inputRef,
 }) => {
     return (
-        <MUIFormControl style={{ margin: "1rem 0", width: "100%" }}>
+        <MUIFormControl style={{ margin: "1rem 0 0", width: "100%" }}>
             <MUIInputLabel>{label}</MUIInputLabel>
             <MUIOutlinedInput
                 inputRef={inputRef}

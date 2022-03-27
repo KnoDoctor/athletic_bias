@@ -5,8 +5,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 
 import Button from "../atoms/Button";
-import TextInput from "../atoms/TextInput";
-import BasicDatePicker from "../molecules/DatePicker";
+import TextField from "../atoms/TextInput";
 import BasicSelect from "../molecules/Select";
 
 import PlacesAutocomplete from "../molecules/PlacesAutocomplete";
@@ -15,18 +14,35 @@ export default function CoachDetailsForm({ coachId }) {
     const router = useRouter();
 
     const [loading, setLoading] = useState(false);
+    const [yearsOfExperience, setYearsOfExperience] = useState(null);
+    const [highestLevelCoached, setHighestLevelCoached] = useState(null);
+    const [currentlyCoaching, setCurrentlyCoaching] = useState(null);
+    const [lastAgeCoached, setLastAgeCoached] = useState(null);
+    const [athleteInSport, setAthleteInSport] = useState(null);
     const [educationLevel, setEducationLevel] = useState(null);
     const [genderIdentity, setGenderIdentity] = useState(null);
-    const [dateOfBirth, setDateOfBirth] = useState(null);
     const [cityOfBirth, setCityOfBirth] = useState(null);
     const [cityOfResidence, setCityOfResidence] = useState(null);
 
+    console.log(yearsOfExperience);
+    console.log(highestLevelCoached);
+    console.log(currentlyCoaching);
+    console.log(lastAgeCoached);
+    console.log(athleteInSport);
     console.log(cityOfBirth);
     console.log(cityOfResidence);
 
     function handleContinueClick(e) {
         e.preventDefault();
         updateCoach();
+    }
+
+    function handleYearsOfExperienceChange(e) {
+        setYearsOfExperience(parseInt(e.target.value));
+    }
+
+    function handleLastAgeCoachedChange(e) {
+        setLastAgeCoached(parseInt(e.target.value));
     }
 
     const updateCoach = async () => {
@@ -37,8 +53,12 @@ export default function CoachDetailsForm({ coachId }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                years_of_experience: yearsOfExperience,
+                highest_level_coached: highestLevelCoached,
+                currently_coaching: currentlyCoaching,
+                last_age_coached: lastAgeCoached,
+                athlete_in_sport: athleteInSport,
                 education_level: educationLevel,
-                date_of_birth: dateOfBirth,
                 city_of_birth: cityOfBirth.description,
                 city_of_residence: cityOfResidence.description,
                 gender_identity: genderIdentity,
@@ -67,10 +87,57 @@ export default function CoachDetailsForm({ coachId }) {
             >
                 <h2>Perceptions on Athlete Development</h2>
                 <p>{coachId}</p>
-                <BasicDatePicker
-                    value={dateOfBirth}
-                    setValue={setDateOfBirth}
+                <TextField
+                    id="yearsOfExperience"
+                    type={"number"}
+                    value={yearsOfExperience}
+                    label="Number of years you have coached?"
+                    onChange={handleYearsOfExperienceChange}
                 />
+                <BasicSelect
+                    label="Are you currently in a coaching position?"
+                    value={currentlyCoaching}
+                    setValue={setCurrentlyCoaching}
+                    options={[
+                        { name: "Yes", value: true },
+                        { name: "No", value: false },
+                    ]}
+                />
+                <BasicSelect
+                    label="Highest level of athlete you have coached?"
+                    value={highestLevelCoached}
+                    setValue={setHighestLevelCoached}
+                    options={[
+                        { name: "Local", value: "Local" },
+                        { name: "Regional", value: "Regional" },
+                        { name: "National", value: "National" },
+                        { name: "International", value: "International" },
+                    ]}
+                />
+                <TextField
+                    id="lastAgeCoached"
+                    type={"number"}
+                    value={lastAgeCoached}
+                    label={
+                        currentlyCoaching
+                            ? "What age are the athletes you work with?"
+                            : "What age were the athletes you worked with?"
+                    }
+                    onChange={handleLastAgeCoachedChange}
+                />
+
+                <BasicSelect
+                    label={`Were you an athlete in the sport you ${
+                        currentlyCoaching ? "coach" : "coached"
+                    }?`}
+                    value={athleteInSport}
+                    setValue={setAthleteInSport}
+                    options={[
+                        { name: "Yes", value: true },
+                        { name: "No", value: false },
+                    ]}
+                />
+
                 <BasicSelect
                     label="How do you identify?"
                     value={genderIdentity}

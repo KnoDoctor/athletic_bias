@@ -19,23 +19,29 @@ model responses {
 }
 
 model coaches {
-  first_name        String?               @db.VarChar(250)
-  coach_id          String                @id @db.Uuid
-  email             String?               @unique @db.VarChar(100)
-  last_name         String?               @db.VarChar(250)
-  date_of_birth     DateTime?             @db.Date
-  gender_identity   String?               @db.VarChar(100)
-  education_level   String?               @db.VarChar(100)
-  sport_id          String?               @db.Uuid
-  has_consented     Boolean?
-  access_code       String?               @db.VarChar(10)
-  city_of_birth     String?               @db.VarChar(150)
-  city_of_residence String?               @db.VarChar(150)
-  hard_work_pref    Int?
-  natural_pref      Int?
-  sport             sports?               @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
-  preferences       coaches_preferences[]
-  responses         responses[]
+  first_name            String?               @db.VarChar(250)
+  coach_id              String                @id @db.Uuid
+  email                 String?               @unique @db.VarChar(100)
+  last_name             String?               @db.VarChar(250)
+  date_of_birth         DateTime?             @db.Date
+  gender_identity       String?               @db.VarChar(100)
+  education_level       String?               @db.VarChar(100)
+  sport_id              String?               @db.Uuid
+  has_consented         Boolean?
+  access_code           String?               @db.VarChar(10)
+  city_of_birth         String?               @db.VarChar(150)
+  city_of_residence     String?               @db.VarChar(150)
+  hard_work_pref        Int?
+  natural_pref          Int?
+  is_control            Boolean?
+  years_of_experience   Int?
+  highest_level_coached String?               @db.VarChar(100)
+  currently_coaching    Boolean?
+  last_age_coached      Int?
+  athlete_in_sport      Boolean?
+  sport                 sports?               @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
+  preferences           coaches_preferences[]
+  responses             responses[]
 }
 
 model athletes {

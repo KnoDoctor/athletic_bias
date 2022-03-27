@@ -9,12 +9,14 @@ import Alert from "@mui/material/Alert";
 import Button from "../atoms/Button";
 import TextField from "../atoms/TextInput";
 import FullScreenDialog from "../molecules/FullScreenDialog";
+import BasicDatePicker from "../molecules/DatePicker";
 
 const CoachConsentForm = ({ setCoachId }) => {
     const router = useRouter();
 
     const [firstNameValue, setFirstNameValue] = useState(null);
     const [lastNameValue, setLastNameValue] = useState(null);
+    const [dateOfBirth, setDateOfBirth] = useState(null);
     const [emailValue, setEmailValue] = useState(null);
     const [accessCodeValue, setAccessCodeValue] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -79,16 +81,30 @@ const CoachConsentForm = ({ setCoachId }) => {
                     break;
             }
         };
-        setLoading(true);
+
+        const generateAccessCode = () => {
+            let firstInitial = firstNameValue[0];
+            let lastInitial = lastNameValue[0];
+
+            let date = dateOfBirth.toISOString().split("T")[0];
+
+            let month = date.split("-")[1];
+            let day = date.split("-")[2];
+
+            return firstInitial + lastInitial + month + day;
+        };
+
         let createCoachRes = await fetch(`/api/coaches`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                email: emailValue.toLowerCase(),
                 first_name: firstNameValue,
                 last_name: lastNameValue,
-                email: emailValue,
+                date_of_birth: dateOfBirth,
+                access_code: generateAccessCode(),
             }),
         });
         let createCoachData = await createCoachRes.json();
@@ -161,6 +177,13 @@ const CoachConsentForm = ({ setCoachId }) => {
                     <h2>Perceptions on Athlete Development</h2>
 
                     <TextField
+                        id="email"
+                        type={"text"}
+                        value={emailValue}
+                        label="Email"
+                        onChange={handleEmailChange}
+                    />
+                    <TextField
                         id="firstName"
                         type={"text"}
                         value={firstNameValue}
@@ -174,12 +197,9 @@ const CoachConsentForm = ({ setCoachId }) => {
                         label="Last Name"
                         onChange={handleLastNameChange}
                     />
-                    <TextField
-                        id="email"
-                        type={"text"}
-                        value={emailValue}
-                        label="Email"
-                        onChange={handleEmailChange}
+                    <BasicDatePicker
+                        value={dateOfBirth}
+                        setValue={setDateOfBirth}
                     />
                     {error?.code === "P2002" || error?.code === "IE0001" ? (
                         <TextField

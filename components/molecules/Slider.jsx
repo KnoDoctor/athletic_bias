@@ -13,7 +13,7 @@ export default function Slider({ label, value, setValue, options }) {
         <FormControl sx={{ marginTop: "1rem", width: "100%" }}>
             <FormLabel sx={{ textAlign: "left" }}>{label}</FormLabel>
             <h4 style={{ marginBottom: 0 }}>
-                Hard Work: {50 - value}% | {50 + value}% :Natural Talent
+                Striver {50 - value}% | {50 + value}% Natural
             </h4>
             <MUISlider
                 value={value}
