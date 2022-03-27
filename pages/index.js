@@ -106,10 +106,20 @@ export default function Index() {
         <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
                 <h1 style={{ textAlign: "center" }}>
-                    {coach
-                        ? `Welcome, ${coach.first_name}!`
-                        : "Welcome, please click below to get started."}
+                    Welcome to Take Your Pick
                 </h1>
+                {coach ? (
+                    <>
+                        <p>
+                            Hi {coach.first_name}, thank you for completing your
+                            coach profile! In the second part of this survey you
+                            will be shown several athlete profiles and asked to
+                            share feedback on there likelihood to succeed.
+                        </p>
+                    </>
+                ) : (
+                    <></>
+                )}
                 {coach ? (
                     <Link href="/surveys">
                         <a style={{ textDecoration: "none" }}>
@@ -118,7 +128,7 @@ export default function Index() {
                                 color="primary"
                                 size="small"
                             >
-                                Complete Another Survey
+                                Continue to Athletes
                             </Button>
                         </a>
                     </Link>
@@ -130,7 +140,7 @@ export default function Index() {
                                 color="primary"
                                 size="small"
                             >
-                                Click Me
+                                Get Started
                             </Button>
                         </a>
                     </Link>
