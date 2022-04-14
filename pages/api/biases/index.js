@@ -32,19 +32,33 @@ export default async function handle(req, res) {
 
     async function createBias() {
         try {
-            const { name } = req.body;
+            const { bias_type, bias_code, bias_statement } = req.body;
 
-            if (!name) {
+            if (!bias_type) {
                 return res.status(400).json({
                     success: false,
-                    error: "Could not create bias, name parameter is missing.",
+                    error: "Could not create bias, bias_type parameter is missing.",
+                });
+            }
+            if (!bias_code) {
+                return res.status(400).json({
+                    success: false,
+                    error: "Could not create bias, bias_code parameter is missing.",
+                });
+            }
+            if (!bias_statement) {
+                return res.status(400).json({
+                    success: false,
+                    error: "Could not create bias, bias_statement parameter is missing.",
                 });
             }
 
             const createdBias = await prisma.biases.create({
                 data: {
                     bias_id: generateGuid(),
-                    name,
+                    bias_type,
+                    bias_code,
+                    bias_statement,
                 },
             });
 

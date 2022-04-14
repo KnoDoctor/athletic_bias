@@ -41,14 +41,16 @@ export default async function handle(req, res) {
 
         case "PATCH":
             try {
-                const { name } = req.body;
+                const { bias_type, bias_code, bias_statement } = req.body;
 
                 const patchedBias = await prisma.biases.update({
                     where: {
                         bias_id: identifier,
                     },
                     data: {
-                        name,
+                        bias_type,
+                        bias_code,
+                        bias_statement,
                     },
                 });
 

@@ -45,7 +45,7 @@ model coaches {
 }
 
 model athletes {
-  athlete_id      String      @id @db.Uuid
+  athlete_id      String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   email           String?     @unique @db.VarChar(100)
   first_name      String?     @db.VarChar(250)
   last_name       String?     @db.VarChar(250)
@@ -54,6 +54,9 @@ model athletes {
   education_level String?     @db.VarChar(100)
   has_consented   Boolean?
   sport_id        String?     @db.Uuid
+  photo_url       String?     @db.VarChar(250)
+  biography_1     String?
+  biography_2     String?
   sport           sports?     @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "athlete_sport_id")
   responses       responses[]
 }
@@ -75,10 +78,12 @@ model preferences {
 }
 
 model biases {
-  bias_id   String          @id @db.Uuid
-  name      String?         @db.VarChar(250)
-  responses responses[]
-  sports    sports_biases[]
+  bias_id        String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  bias_type      String?         @db.VarChar(250)
+  bias_code      Int?
+  bias_statement String?         @db.VarChar(1000)
+  responses      responses[]
+  sports         sports_biases[]
 }
 
 model coaches_preferences {
@@ -138,4 +143,46 @@ model rugby_athletes {
   five_o_five_right       Decimal?  @db.Decimal
   aggregate_five_o_five   Decimal?  @db.Decimal
   rugby_athlete_id        BigInt    @id @default(autoincrement())
+}
+
+model rugby_stats {
+  rugby_stat_id                              Int      @id
+  position                                   String?  @db.VarChar(50)
+  age                                        Decimal? @db.Decimal
+  age_group_mean                             Decimal? @db.Decimal
+  years_from_phv                             Decimal? @db.Decimal
+  age_at_phv                                 Decimal? @db.Decimal
+  height                                     Decimal? @db.Decimal
+  height_group_mean                          Decimal? @db.Decimal
+  height_distance_from_mean                  Decimal? @db.Decimal
+  sitting_height                             Decimal? @db.Decimal
+  sitting_height_group_mean                  Decimal? @db.Decimal
+  sitting_height_distance_from_mean          Decimal? @db.Decimal
+  weight                                     Decimal? @db.Decimal
+  weight_group_mean                          Decimal? @db.Decimal
+  weight_distance_from_mean                  Decimal? @db.Decimal
+  leg_length                                 Decimal? @db.Decimal
+  leg_length_group_mean                      Decimal? @db.Decimal
+  leg_length_distance_from_mean              Decimal? @db.Decimal
+  vertical_jump                              Decimal? @db.Decimal
+  vertical_jump_group_mean                   Decimal? @db.Decimal
+  vertical_jump_distance_from_mean           Decimal? @db.Decimal
+  mid_thigh_pull                             Decimal? @db.Decimal
+  mid_thigh_pull_group_mean                  Decimal? @db.Decimal
+  mid_thigh_pull_distance_from_mean          Decimal? @db.Decimal
+  relative_mid_thigh_pull                    Decimal? @db.Decimal
+  relative_mid_thigh_pull_group_mean         Decimal? @db.Decimal
+  relative_mid_thigh_pull_distance_from_mean Decimal? @db.Decimal
+  ten_meter_sprint                           Decimal? @db.Decimal
+  ten_meter_sprint_group_mean                Decimal? @db.Decimal
+  ten_meter_sprint_distance_from_mean        Decimal? @db.Decimal
+  five_o_five_left                           Decimal? @db.Decimal
+  five_o_five_left_group_mean                Decimal? @db.Decimal
+  five_o_five_left_distance_from_mean        Decimal? @db.Decimal
+  five_o_five_right                          Decimal? @db.Decimal
+  five_o_five_right_group_mean               Decimal? @db.Decimal
+  five_o_five_right_distance_from_mean       Decimal? @db.Decimal
+  five_o_five_aggregate                      Decimal? @db.Decimal
+  five_o_five_aggregate_group_mean           Decimal? @db.Decimal
+  five_o_five_aggregate_distance_from_mean   Decimal? @db.Decimal
 }
