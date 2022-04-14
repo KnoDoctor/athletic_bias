@@ -18,6 +18,8 @@ export default async function handle(req, res) {
             const allAthletes = await prisma.athletes.findMany({
                 include: {
                     sport: true,
+                    bias: true,
+                    rugby_stat: true,
                 },
             });
 

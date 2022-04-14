@@ -59,8 +59,8 @@ model athletes {
   biography_2     String?
   bias_id         String?      @db.Uuid
   rugby_stat_id   Int?
-  biases          biases?      @relation(fields: [bias_id], references: [bias_id], onDelete: NoAction, onUpdate: NoAction, map: "athlete_bias_id")
-  rugby_stats     rugby_stats? @relation(fields: [rugby_stat_id], references: [rugby_stat_id], onDelete: NoAction, onUpdate: NoAction, map: "athlete_rugby_stat_id")
+  bias            biases?      @relation(fields: [bias_id], references: [bias_id], onDelete: NoAction, onUpdate: NoAction, map: "athlete_bias_id")
+  rugby_stat      rugby_stats? @relation(fields: [rugby_stat_id], references: [rugby_stat_id], onDelete: NoAction, onUpdate: NoAction, map: "athlete_rugby_stat_id")
   sport           sports?      @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "athlete_sport_id")
   responses       responses[]
 }
