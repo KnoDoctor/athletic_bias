@@ -8,11 +8,13 @@ datasource db {
 }
 
 model responses {
-  response_id           String    @id @db.Uuid
+  response_id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   coach_id              String?   @db.Uuid
   athlete_id            String?   @db.Uuid
   bias_id               String?   @db.Uuid
   likelihood_to_recruit Int
+  likelihood_to_succeed Int?
+  created_at            DateTime? @default(now()) @db.Timestamptz(6)
   athlete               athletes? @relation(fields: [athlete_id], references: [athlete_id], onDelete: NoAction, onUpdate: NoAction, map: "response_athlete_id")
   bias                  biases?   @relation(fields: [bias_id], references: [bias_id], onDelete: NoAction, onUpdate: NoAction, map: "response_bias_id")
   coach                 coaches?  @relation(fields: [coach_id], references: [coach_id], onDelete: NoAction, onUpdate: NoAction, map: "response_coach_id")
