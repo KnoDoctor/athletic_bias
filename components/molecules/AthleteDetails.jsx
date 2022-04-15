@@ -10,9 +10,11 @@ const style = {
     bgcolor: "background.paper",
 };
 
-export default function AthleteOverview({
+export default function AthleteDetails({
     athleteAge,
     athleteHeight,
+    athleteSittingHeight,
+    athleteYearsFromPhv,
     athleteWeight,
 }) {
     return (
@@ -62,6 +64,28 @@ export default function AthleteOverview({
                 </Grid>
             </ListItem>
             <Divider />
+            <ListItem button>
+                <Grid container>
+                    <Grid item xs={6}>
+                        <p style={{ margin: 0 }}>Sitting Height:</p>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <p style={{ margin: 0 }}>{athleteSittingHeight} cm</p>
+                    </Grid>
+                </Grid>
+            </ListItem>
+            <Divider />
+            {/* <ListItem button>
+                <Grid container>
+                    <Grid item xs={6}>
+                        <p style={{ margin: 0 }}>Years from PHV:</p>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <p style={{ margin: 0 }}>{athleteYearsFromPhv} cm</p>
+                    </Grid>
+                </Grid>
+            </ListItem>
+            <Divider /> */}
             <ListItem button>
                 <Grid container>
                     <Grid item xs={6}>

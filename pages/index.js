@@ -121,7 +121,7 @@ export default function Index() {
                     <></>
                 )}
                 {coach ? (
-                    <Link href="/surveys">
+                    <Link href="/survey">
                         <a style={{ textDecoration: "none" }}>
                             <Button
                                 variant="contained"

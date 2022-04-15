@@ -26,7 +26,7 @@ const index = () => {
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : (
-                    <Survey atheletes={athletes} />
+                    <Survey athletes={athletes} />
                 )}
             </Box>
         </Container>

@@ -2,19 +2,12 @@ import React from "react";
 
 import Box from "@mui/material/Box";
 
-const AthleteBiography = ({ bio }) => {
+const AthleteBiography = ({ biography1, biography2, bias }) => {
     return (
         <Box>
             <h3>Biography</h3>
-            {bio ? (
-                bio.map((paragraph, i, arr) => (
-                    <p style={i + 1 == arr.length ? { marginBottom: 0 } : null}>
-                        {paragraph}
-                    </p>
-                ))
-            ) : (
-                <></>
-            )}
+            <p>{biography1}</p>
+            <p style={{ marginBottom: 0 }}>{bias}</p>
         </Box>
     );
 };

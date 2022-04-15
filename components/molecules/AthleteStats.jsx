@@ -40,7 +40,9 @@ export default function AthleteStats({ stats }) {
                         <p style={{ margin: 0, fontWeight: "600" }}>Value</p>
                     </Grid>
                     <Grid item xs={3}>
-                        <p style={{ margin: 0, fontWeight: "600" }}>Variance</p>
+                        <p style={{ margin: 0, fontWeight: "600" }}>
+                            Group Variance
+                        </p>
                     </Grid>
                 </Grid>
             </ListItem>

@@ -8,7 +8,13 @@ import FormLabel from "@mui/material/FormLabel";
 
 import { convertToSlug } from "../../utils/helperFunctions";
 
-export default function SurveyResponseRadio({ title, label, options }) {
+export default function SurveyResponseRadio({
+    title,
+    label,
+    options,
+    value,
+    setValue,
+}) {
     return (
         <Box>
             <h3>{title}</h3>
@@ -19,6 +25,8 @@ export default function SurveyResponseRadio({ title, label, options }) {
                 <RadioGroup
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name={`${convertToSlug(title)}-radio-buttons-group`}
+                    onChange={(e) => setValue(e.target.value)}
+                    value={value}
                 >
                     {options.map((option) => (
                         <FormControlLabel
