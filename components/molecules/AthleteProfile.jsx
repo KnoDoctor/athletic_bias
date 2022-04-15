@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 const AthleteProfileCard = ({ athletePhoto, athleteName, athletePosition }) => {
     return (
         <Grid container my={3}>
-            <Grid item xs={4}>
+            <Grid item xs={5} sm={4}>
                 <Avatar
                     alt="Remy Sharp"
                     src={athletePhoto}
