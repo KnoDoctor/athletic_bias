@@ -6,6 +6,7 @@ import Card from "@mui/material/Card";
 
 import Button from "../atoms/Button";
 import TextField from "../atoms/TextInput";
+import RadioButtons from "../molecules/RadioButtons";
 import BasicSelect from "../molecules/Select";
 
 import PlacesAutocomplete from "../molecules/PlacesAutocomplete";
@@ -15,6 +16,7 @@ export default function CoachDetailsForm({ coachId }) {
 
     const [loading, setLoading] = useState(false);
     const [yearsOfExperience, setYearsOfExperience] = useState(null);
+    const [levelOfExperience, setLevelOfExperience] = useState(null);
     const [highestLevelCoached, setHighestLevelCoached] = useState(null);
     const [currentlyCoaching, setCurrentlyCoaching] = useState(null);
     const [lastAgeCoached, setLastAgeCoached] = useState(null);
@@ -25,10 +27,11 @@ export default function CoachDetailsForm({ coachId }) {
     const [cityOfResidence, setCityOfResidence] = useState(null);
 
     console.log(yearsOfExperience);
+    console.log(levelOfExperience);
     console.log(highestLevelCoached);
     console.log(currentlyCoaching);
     console.log(lastAgeCoached);
-    console.log(athleteInSport);
+    //console.log(athleteInSport);
     console.log(cityOfBirth);
     console.log(cityOfResidence);
 
@@ -53,11 +56,12 @@ export default function CoachDetailsForm({ coachId }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                level_of_experience: levelOfExperience,
                 years_of_experience: yearsOfExperience,
                 highest_level_coached: highestLevelCoached,
                 currently_coaching: currentlyCoaching,
                 last_age_coached: lastAgeCoached,
-                athlete_in_sport: athleteInSport,
+                // athlete_in_sport: athleteInSport,
                 education_level: educationLevel,
                 city_of_birth: cityOfBirth.description,
                 city_of_residence: cityOfResidence.description,
@@ -82,11 +86,34 @@ export default function CoachDetailsForm({ coachId }) {
                 style={{
                     width: "90%",
                     margin: "auto",
-                    textAlign: "center",
                 }}
             >
-                <h2>Perceptions on Athlete Development</h2>
-                <p>{coachId}</p>
+                <h2
+                    style={{
+                        textAlign: "center",
+                    }}
+                >
+                    Perceptions on Athlete Development
+                </h2>
+                {/* <p>{coachId}</p> */}
+                <h3
+                    style={{
+                        marginBottom: 0,
+                    }}
+                >
+                    Tell us a bit about your coaching experience:
+                </h3>
+                <RadioButtons
+                    label={`How would you rank your skill level as a coach?`}
+                    value={levelOfExperience}
+                    setValue={setLevelOfExperience}
+                    options={[
+                        { name: "Novice", value: "Novice" },
+                        { name: "Competent", value: "Competent" },
+                        { name: "Proficient", value: "Proficient" },
+                        { name: "Expert", value: "Expert" },
+                    ]}
+                />
                 <TextField
                     id="yearsOfExperience"
                     type={"number"}
@@ -126,7 +153,7 @@ export default function CoachDetailsForm({ coachId }) {
                     onChange={handleLastAgeCoachedChange}
                 />
 
-                <BasicSelect
+                {/* <BasicSelect
                     label={`Were you an athlete in the sport you ${
                         currentlyCoaching ? "coach" : "coached"
                     }?`}
@@ -136,8 +163,14 @@ export default function CoachDetailsForm({ coachId }) {
                         { name: "Yes", value: true },
                         { name: "No", value: false },
                     ]}
-                />
-
+                /> */}
+                <h3
+                    style={{
+                        marginBottom: 0,
+                    }}
+                >
+                    Tell us a bit about you:
+                </h3>
                 <BasicSelect
                     label="How do you identify?"
                     value={genderIdentity}

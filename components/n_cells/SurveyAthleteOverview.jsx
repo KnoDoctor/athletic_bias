@@ -6,6 +6,8 @@ import AthleteBiography from "../molecules/AthleteBiography";
 import AthleteStats from "../molecules/AthleteStats";
 
 const SurveyAthleteOverview = ({ athlete }) => {
+    let isControl = JSON.parse(localStorage.getItem("coach")).is_control;
+
     const athleteStatsArray = [
         {
             name: "Vertical Jump",
@@ -91,7 +93,7 @@ const SurveyAthleteOverview = ({ athlete }) => {
             />
             <AthleteBiography
                 biography1={athlete.biography_1}
-                bias={athlete.bias.bias_statement}
+                bias={isControl ? "" : athlete.bias.bias_statement}
                 biography2={athlete.biography_2}
             />
             <AthleteStats stats={athleteStatsArray} />

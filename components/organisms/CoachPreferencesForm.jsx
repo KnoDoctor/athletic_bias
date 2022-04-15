@@ -16,6 +16,8 @@ export default function CoachPreferencesForm({ coachId }) {
     const [loading, setLoading] = useState(false);
     const [sportsOptions, setSportsOptions] = useState(null);
     const [selectedSport, setSelectedSport] = useState("");
+    const [athleteInSport, setAthleteInSport] = useState(null);
+    const [primaryPositionPlayed, setPrimaryPositionPlayed] = useState(null);
     const [sportPreferences, setSportPreferences] = useState(null);
     const [selectedPreferences, setSelectedPreferences] = useState([]);
     const [sliderValue, setSliderValue] = useState(0);
@@ -70,6 +72,8 @@ export default function CoachPreferencesForm({ coachId }) {
             },
             body: JSON.stringify({
                 sport_id: selectedSport,
+                athlete_in_sport: athleteInSport,
+                primary_position_played: primaryPositionPlayed,
                 hard_work_pref: hardWorkPreference,
                 natural_pref: naturalPreference,
                 preferences: selectedPreferences.map((preference) => ({
@@ -122,6 +126,70 @@ export default function CoachPreferencesForm({ coachId }) {
                 />
                 {sportPreferences ? (
                     <>
+                        <BasicSelect
+                            label={`Were you an athlete in your sport of expertise?`}
+                            value={athleteInSport}
+                            setValue={setAthleteInSport}
+                            options={[
+                                { name: "Yes", value: true },
+                                { name: "No", value: false },
+                            ]}
+                        />
+                        {athleteInSport &&
+                        selectedSport ===
+                            "c3f4d741-aa32-4aec-8b56-d4cebc1efb1f" ? (
+                            <BasicSelect
+                                label={`What was your primary playing position as an athlete?`}
+                                value={primaryPositionPlayed}
+                                setValue={setPrimaryPositionPlayed}
+                                options={[
+                                    {
+                                        name: "Front Row Forward/ Prop",
+                                        value: "Front Row Forward/ Prop",
+                                    },
+                                    { name: "Hooker", value: "Hooker" },
+                                    {
+                                        name: "2nd Row Forward/ Lock",
+                                        value: "2nd Row Forward/ Lock",
+                                    },
+                                    {
+                                        name: "Blindside Flanker/ Openside Flanker",
+                                        value: "Blindside Flanker/ Openside Flanker",
+                                    },
+                                    {
+                                        name: "Number-Eight",
+                                        value: "Number-Eight",
+                                    },
+                                    {
+                                        name: "Lock/ Loose Forward",
+                                        value: "Lock/ Loose Forward",
+                                    },
+                                    {
+                                        name: "Half-Back/ Scrum-Half",
+                                        value: "Half-Back/ Scrum-Half",
+                                    },
+                                    {
+                                        name: "Five-Eighth/ Fly-Half",
+                                        value: "Five-Eighth/ Fly-Half",
+                                    },
+                                    {
+                                        name: "Inside Center/ 2nd Five/ Outside Centre",
+                                        value: "Inside Center/ 2nd Five/ Outside Centre",
+                                    },
+                                    {
+                                        name: "Left Centre/ Right Centre",
+                                        value: "Left Centre/ Right Centre",
+                                    },
+                                    {
+                                        name: "Left Wing/ Right Wing",
+                                        value: "Left Wing/ Right Wing",
+                                    },
+                                    { name: "Fullback", value: "Fullback" },
+                                ]}
+                            />
+                        ) : (
+                            <></>
+                        )}
                         <ChipSelection
                             label={`In your opinion, what are the 3 most important attributes of talent in your sport?`}
                             value={selectedPreferences}
