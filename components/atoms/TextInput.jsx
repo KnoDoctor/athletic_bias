@@ -23,6 +23,9 @@ const TextInput = ({
                 value={value}
                 onChange={onChange}
                 endAdornment={endAdornment}
+                onWheel={
+                    type === "number" ? (event) => event.target.blur() : null
+                }
             />
         </MUIFormControl>
     );

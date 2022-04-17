@@ -66,6 +66,15 @@ const CoachConsentForm = ({ setCoachId }) => {
         event.preventDefault();
     };
 
+    const isConsentFormIncomplete = () => {
+        if (!firstNameValue) return true;
+        if (!lastNameValue) return true;
+        if (!emailValue) return true;
+        if (!dateOfBirth) return true;
+
+        return false;
+    };
+
     const createCoach = async () => {
         const errorSetter = (errorObject) => {
             switch (errorObject.code) {
@@ -235,9 +244,10 @@ const CoachConsentForm = ({ setCoachId }) => {
                             loadingSettings={{
                                 loading,
                             }}
+                            disabled={isConsentFormIncomplete()}
                         >
                             {hasConsented
-                                ? "Continue to Survey"
+                                ? "Complete Your Profile"
                                 : "Review Consent Form"}
                         </Button>
                     )}

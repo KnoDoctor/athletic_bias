@@ -20,20 +20,10 @@ export default function CoachDetailsForm({ coachId }) {
     const [highestLevelCoached, setHighestLevelCoached] = useState(null);
     const [currentlyCoaching, setCurrentlyCoaching] = useState(null);
     const [lastAgeCoached, setLastAgeCoached] = useState(null);
-    const [athleteInSport, setAthleteInSport] = useState(null);
     const [educationLevel, setEducationLevel] = useState(null);
     const [genderIdentity, setGenderIdentity] = useState(null);
     const [cityOfBirth, setCityOfBirth] = useState(null);
     const [cityOfResidence, setCityOfResidence] = useState(null);
-
-    console.log(yearsOfExperience);
-    console.log(levelOfExperience);
-    console.log(highestLevelCoached);
-    console.log(currentlyCoaching);
-    console.log(lastAgeCoached);
-    //console.log(athleteInSport);
-    console.log(cityOfBirth);
-    console.log(cityOfResidence);
 
     function handleContinueClick(e) {
         e.preventDefault();
@@ -48,6 +38,20 @@ export default function CoachDetailsForm({ coachId }) {
         setLastAgeCoached(parseInt(e.target.value));
     }
 
+    const isDetailsFormIncomplete = () => {
+        if (!yearsOfExperience) return true;
+        if (!levelOfExperience) return true;
+        if (!highestLevelCoached) return true;
+        if (currentlyCoaching === null) return true;
+        if (!lastAgeCoached) return true;
+        if (!educationLevel) return true;
+        if (!genderIdentity) return true;
+        if (!cityOfBirth) return true;
+        if (!cityOfResidence) return true;
+
+        return false;
+    };
+
     const updateCoach = async () => {
         setLoading(true);
         let updateCoachRes = await fetch(`/api/coaches/${coachId}`, {
@@ -61,7 +65,7 @@ export default function CoachDetailsForm({ coachId }) {
                 highest_level_coached: highestLevelCoached,
                 currently_coaching: currentlyCoaching,
                 last_age_coached: lastAgeCoached,
-                // athlete_in_sport: athleteInSport,
+
                 education_level: educationLevel,
                 city_of_birth: cityOfBirth.description,
                 city_of_residence: cityOfResidence.description,
@@ -152,18 +156,6 @@ export default function CoachDetailsForm({ coachId }) {
                     }
                     onChange={handleLastAgeCoachedChange}
                 />
-
-                {/* <BasicSelect
-                    label={`Were you an athlete in the sport you ${
-                        currentlyCoaching ? "coach" : "coached"
-                    }?`}
-                    value={athleteInSport}
-                    setValue={setAthleteInSport}
-                    options={[
-                        { name: "Yes", value: true },
-                        { name: "No", value: false },
-                    ]}
-                /> */}
                 <h3
                     style={{
                         marginBottom: 0,
@@ -213,6 +205,7 @@ export default function CoachDetailsForm({ coachId }) {
                     loadingSettings={{
                         loading,
                     }}
+                    disabled={isDetailsFormIncomplete()}
                 >
                     Next
                 </Button>

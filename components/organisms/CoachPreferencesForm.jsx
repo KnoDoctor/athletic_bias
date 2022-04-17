@@ -6,7 +6,6 @@ import Card from "@mui/material/Card";
 
 import Button from "../atoms/Button";
 import BasicSelect from "../molecules/Select";
-import RadioButtons from "../molecules/RadioButtons";
 import Slider from "../molecules/Slider";
 import ChipSelection from "../molecules/ChipSelection";
 
@@ -15,7 +14,7 @@ export default function CoachPreferencesForm({ coachId }) {
 
     const [loading, setLoading] = useState(false);
     const [sportsOptions, setSportsOptions] = useState(null);
-    const [selectedSport, setSelectedSport] = useState("");
+    const [selectedSport, setSelectedSport] = useState(null);
     const [athleteInSport, setAthleteInSport] = useState(null);
     const [primaryPositionPlayed, setPrimaryPositionPlayed] = useState(null);
     const [sportPreferences, setSportPreferences] = useState(null);
@@ -23,12 +22,30 @@ export default function CoachPreferencesForm({ coachId }) {
     const [sliderValue, setSliderValue] = useState(0);
     const [hardWorkPreference, setHardWorkPreference] = useState(null);
     const [naturalPreference, setNaturalPreference] = useState(null);
-    const [talentPreference, setTalentPreference] = useState(null);
 
     function handleContinueClick(e) {
         e.preventDefault();
         updateCoach();
     }
+
+    const isPreferencesFormIncomplete = () => {
+        if (!selectedSport) return true;
+        if (athleteInSport === null) return true;
+        if (!hardWorkPreference) return true;
+        if (!naturalPreference) return true;
+
+        if (
+            athleteInSport &&
+            selectedSport === "c3f4d741-aa32-4aec-8b56-d4cebc1efb1f"
+        ) {
+            console.log("Here");
+            if (!primaryPositionPlayed) return true;
+        }
+
+        if (selectedPreferences.length !== 3) return true;
+
+        return false;
+    };
 
     const getSportsOptions = async () => {
         let sportsRes = await fetch(`/api/sports`);
@@ -205,15 +222,7 @@ export default function CoachPreferencesForm({ coachId }) {
                 ) : (
                     <></>
                 )}
-                {/* <RadioButtons
-                    label={`If you had to choose between selecting a player that was known to be a 'naturally talented' athlete or known to be a 'hard worker', what would be your preference?`}
-                    value={talentPreference}
-                    setValue={setTalentPreference}
-                    options={[
-                        { name: "Hard Work", value: "Hard Work" },
-                        { name: "Natural Talent", value: "Natural Talent" },
-                    ]}
-                /> */}
+
                 <Button
                     variant="contained"
                     color={"primary"}
@@ -221,6 +230,7 @@ export default function CoachPreferencesForm({ coachId }) {
                     loadingSettings={{
                         loading,
                     }}
+                    disabled={isPreferencesFormIncomplete()}
                 >
                     Complete Your Profile
                 </Button>
