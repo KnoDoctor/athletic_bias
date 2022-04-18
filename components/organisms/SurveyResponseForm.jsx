@@ -48,10 +48,40 @@ const SurveyResponseForm = ({
             return;
         }
 
+        let updatedCoach = await updateCoach(coach.coach_id);
+
+        if (!updatedCoach.success) {
+            setLoading(false);
+            console.log(updatedCoach);
+            return;
+        }
+
         if (returnHome) return router.push("/");
         resetRadioButtons();
         handleNextClick();
         setLoading(false);
+    };
+
+    const updateCoach = async (coachId) => {
+        let updateCoachRes = await fetch(`/api/coaches/${coachId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                completed_responses: athleteProfileIndex + 1,
+            }),
+        });
+
+        let updateCoachData = await updateCoachRes.json();
+
+        if (!updateCoachData.success) {
+            return updateCoachData;
+        }
+
+        localStorage.setItem("coach", JSON.stringify(updateCoachData.data));
+
+        return updateCoachData;
     };
 
     return (

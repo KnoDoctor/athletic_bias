@@ -43,6 +43,7 @@ model coaches {
   athlete_in_sport        Boolean?
   level_of_experience     String?               @db.VarChar(100)
   primary_position_played String?               @db.VarChar(150)
+  completed_responses     Int?                  @default(0)
   sport                   sports?               @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
   preferences             coaches_preferences[]
   responses               responses[]

@@ -134,7 +134,7 @@ export default function CoachPreferencesForm({ coachId }) {
                 }}
             >
                 <h2>Perceptions on Athlete Development</h2>
-                <p>{coachId}</p>
+                {/* <p>{coachId}</p> */}
                 <BasicSelect
                     label="What is your primary sport of expertise?"
                     value={selectedSport}

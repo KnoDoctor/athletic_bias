@@ -109,29 +109,46 @@ export default function Index() {
                     Welcome to Take Your Pick
                 </h1>
                 {coach ? (
-                    <>
-                        <p>
-                            Hi {coach.first_name}, thank you for completing your
-                            coach profile! In the second part of this survey you
-                            will be shown several athlete profiles and asked to
-                            share feedback on there likelihood to succeed.
+                    coach.completed_responses < 15 ? (
+                        <>
+                            <p>
+                                Hi {coach.first_name}, thank you for completing
+                                your coach profile! In the second part of this
+                                survey you will be shown fifteen athlete
+                                profiles and asked to share feedback on there
+                                likelihood to succeed.
+                            </p>
+                            <p>
+                                So far you have completed{" "}
+                                {coach.completed_responses} out of 15 athlete
+                                profiles.
+                            </p>
+                        </>
+                    ) : (
+                        <p style={{ textAlign: "center" }}>
+                            Thank you for completing our survey{" "}
+                            {coach.first_name}!
                         </p>
-                    </>
+                    )
                 ) : (
                     <></>
                 )}
                 {coach ? (
-                    <Link href="/survey">
-                        <a style={{ textDecoration: "none" }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                            >
-                                Continue to Athletes
-                            </Button>
-                        </a>
-                    </Link>
+                    coach.completed_responses < 15 ? (
+                        <Link href="/survey">
+                            <a style={{ textDecoration: "none" }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                >
+                                    Continue to Athletes
+                                </Button>
+                            </a>
+                        </Link>
+                    ) : (
+                        <></>
+                    )
                 ) : (
                     <Link href="/coaches/signup/consent">
                         <a style={{ textDecoration: "none" }}>

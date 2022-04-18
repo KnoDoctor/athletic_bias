@@ -65,7 +65,6 @@ export default function CoachDetailsForm({ coachId }) {
                 highest_level_coached: highestLevelCoached,
                 currently_coaching: currentlyCoaching,
                 last_age_coached: lastAgeCoached,
-
                 education_level: educationLevel,
                 city_of_birth: cityOfBirth.description,
                 city_of_residence: cityOfResidence.description,

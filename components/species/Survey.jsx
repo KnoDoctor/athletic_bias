@@ -7,7 +7,9 @@ import SurveyAthleteOverview from "../n_cells/SurveyAthleteOverview";
 import SurveyResponseForm from "../organisms/SurveyResponseForm";
 
 const Survey = ({ athletes }) => {
-    const [athleteProfileIndex, setAthleteProfileIndex] = useState(0);
+    const [athleteProfileIndex, setAthleteProfileIndex] = useState(
+        JSON.parse(localStorage.getItem("coach")).completed_responses
+    );
 
     const handleNextClick = () => {
         setAthleteProfileIndex(athleteProfileIndex + 1);
