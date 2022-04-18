@@ -56,7 +56,9 @@ const SurveyResponseForm = ({
             return;
         }
 
-        if (returnHome) return router.push("/");
+        localStorage.setItem("coach", JSON.stringify(updatedCoach.data));
+
+        if (returnHome) return (window.location = "/");
         resetRadioButtons();
         handleNextClick();
         setLoading(false);
@@ -78,8 +80,6 @@ const SurveyResponseForm = ({
         if (!updateCoachData.success) {
             return updateCoachData;
         }
-
-        localStorage.setItem("coach", JSON.stringify(updateCoachData.data));
 
         return updateCoachData;
     };

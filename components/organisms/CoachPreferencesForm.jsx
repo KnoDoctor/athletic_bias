@@ -38,7 +38,6 @@ export default function CoachPreferencesForm({ coachId }) {
             athleteInSport &&
             selectedSport === "c3f4d741-aa32-4aec-8b56-d4cebc1efb1f"
         ) {
-            console.log("Here");
             if (!primaryPositionPlayed) return true;
         }
 
