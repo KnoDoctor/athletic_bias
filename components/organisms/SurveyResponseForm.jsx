@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 
 import SurveyResponseRadio from "../n_cells/SurveyResponseRadio";
 
-import Link from "../../src/Link";
 import Button from "../atoms/Button";
 
 const SurveyResponseForm = ({
@@ -58,7 +57,7 @@ const SurveyResponseForm = ({
 
         localStorage.setItem("coach", JSON.stringify(updatedCoach.data));
 
-        if (returnHome) return (window.location = "/");
+        if (returnHome) return router.push("/");
         resetRadioButtons();
         handleNextClick();
         setLoading(false);
@@ -126,19 +125,17 @@ const SurveyResponseForm = ({
                     Next Athlete
                 </Button>
             ) : (
-                <Link href="/">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        onClick={() => {
-                            submitResponse(true);
-                        }}
-                        disabled={!likelihoodToRecruit || !likelihoodToSucceed}
-                    >
-                        Complete Survey
-                    </Button>
-                </Link>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() => {
+                        submitResponse(true);
+                    }}
+                    disabled={!likelihoodToRecruit || !likelihoodToSucceed}
+                >
+                    Complete Survey
+                </Button>
             )}
         </>
     );

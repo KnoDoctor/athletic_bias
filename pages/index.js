@@ -15,6 +15,7 @@ export default function Index() {
         data: false,
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isCoachLoading, setIsCoachLoading] = useState(true);
     const [coach, setCoach] = useState(null);
     const [refreshToken, setRefreshToken] = useState("");
     const [idToken, setIdToken] = useState("");
@@ -22,8 +23,6 @@ export default function Index() {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [posts, setPosts] = useState([]);
-
-    console.log(coach);
 
     const fetchAccessToken = async () => {
         setLoading({ ...loading, accessToken: true });
@@ -86,9 +85,28 @@ export default function Index() {
         setIsLoggedIn(false);
     };
 
+    const getCoachData = async () => {
+        setIsCoachLoading(true);
+        let coach = JSON.parse(localStorage.getItem("coach"));
+        console.log("COACH: ", coach);
+        if (coach) {
+            let coachRes = await fetch(`/api/coaches/${coach.coach_id}`);
+            let coachData = await coachRes.json();
+
+            if (!coachData.success) {
+                setLoading(false);
+                console.log(coachData);
+                return;
+            }
+
+            localStorage.setItem("coach", JSON.stringify(coachData.data));
+            setCoach(coachData.data);
+        }
+        setIsCoachLoading(false);
+    };
+
     useEffect(() => {
-        setIsLoggedIn(localStorage.getItem("loggedIn"));
-        setCoach(JSON.parse(localStorage.getItem("coach")));
+        getCoachData();
     }, []);
 
     // useEffect(() => {
@@ -108,59 +126,66 @@ export default function Index() {
                 <h1 style={{ textAlign: "center" }}>
                     Welcome to Take Your Pick
                 </h1>
-                {coach ? (
-                    coach.completed_responses < 15 ? (
-                        <>
-                            <p>
-                                Hi {coach.first_name}, thank you for completing
-                                your coach profile! In the second part of this
-                                survey you will be shown fifteen athlete
-                                profiles and asked to share feedback on there
-                                likelihood to succeed.
-                            </p>
-                            <p>
-                                So far you have completed{" "}
-                                {coach.completed_responses} out of 15 athlete
-                                profiles.
-                            </p>
-                        </>
-                    ) : (
-                        <p style={{ textAlign: "center" }}>
-                            Thank you for completing our survey{" "}
-                            {coach.first_name}!
-                        </p>
-                    )
+                {isCoachLoading ? (
+                    <p style={{ textAlign: "center" }}>Loading...</p>
                 ) : (
-                    <></>
-                )}
-                {coach ? (
-                    coach.completed_responses < 15 ? (
-                        <Link href="/survey">
-                            <a style={{ textDecoration: "none" }}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                >
-                                    Continue to Athletes
-                                </Button>
-                            </a>
-                        </Link>
-                    ) : (
-                        <></>
-                    )
-                ) : (
-                    <Link href="/coaches/signup/consent">
-                        <a style={{ textDecoration: "none" }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                            >
-                                Get Started
-                            </Button>
-                        </a>
-                    </Link>
+                    <>
+                        {coach ? (
+                            coach.completed_responses < 15 ? (
+                                <>
+                                    <p>
+                                        Hi {coach.first_name}, thank you for
+                                        completing your coach profile! In the
+                                        second part of this survey you will be
+                                        shown fifteen athlete profiles and asked
+                                        to share feedback on there likelihood to
+                                        succeed.
+                                    </p>
+                                    <p>
+                                        So far you have completed{" "}
+                                        {coach.completed_responses} out of 15
+                                        athlete profiles.
+                                    </p>
+                                </>
+                            ) : (
+                                <p style={{ textAlign: "center" }}>
+                                    Thank you for completing our survey{" "}
+                                    {coach.first_name}!
+                                </p>
+                            )
+                        ) : (
+                            <></>
+                        )}
+                        {coach ? (
+                            coach.completed_responses < 15 ? (
+                                <Link href="/survey">
+                                    <a style={{ textDecoration: "none" }}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            size="small"
+                                        >
+                                            Continue to Athletes
+                                        </Button>
+                                    </a>
+                                </Link>
+                            ) : (
+                                <></>
+                            )
+                        ) : (
+                            <Link href="/coaches/signup/consent">
+                                <a style={{ textDecoration: "none" }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                    >
+                                        Get Started
+                                    </Button>
+                                </a>
+                            </Link>
+                        )}
+                    </>
                 )}
             </Box>
             {/* <Box sx={{ my: 4 }}>
