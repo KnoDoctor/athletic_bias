@@ -103,7 +103,7 @@ export default function PlacesAutocomplete({ value, setValue, label }) {
                 }
                 filterOptions={(x) => x}
                 options={options}
-                //autoComplete
+                autoComplete
                 noOptionsText={"Search for a city or town..."}
                 includeInputInList
                 filterSelectedOptions

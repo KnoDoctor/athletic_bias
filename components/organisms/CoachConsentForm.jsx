@@ -91,11 +91,11 @@ const CoachConsentForm = ({ setCoachId }) => {
             }
         };
 
+        let tzOffset = dateOfBirth.getTimezoneOffset() * 60000; //offset in milliseconds
+
         const generateAccessCode = () => {
             let firstInitial = firstNameValue[0];
             let lastInitial = lastNameValue[0];
-
-            let tzOffset = dateOfBirth.getTimezoneOffset() * 60000; //offset in milliseconds
 
             let date = new Date(dateOfBirth - tzOffset)
                 .toISOString()
@@ -116,7 +116,7 @@ const CoachConsentForm = ({ setCoachId }) => {
                 email: emailValue.toLowerCase(),
                 first_name: firstNameValue,
                 last_name: lastNameValue,
-                date_of_birth: dateOfBirth,
+                date_of_birth: new Date(dateOfBirth - tzOffset),
                 access_code: generateAccessCode(),
             }),
         });
