@@ -83,7 +83,7 @@ const CoachConsentForm = ({ setCoachId }) => {
                         code: "P2002",
                         severity: "error",
                         message:
-                            "A coach profile with that email already exists, use your access code to proceed to the survey",
+                            "A coach profile with that email already exists, use your access code to proceed to the survey. Your access code consists of your first name inital, your last name initial, your birth month, and your birth day. For example TT0325",
                     };
 
                 default:
@@ -95,7 +95,11 @@ const CoachConsentForm = ({ setCoachId }) => {
             let firstInitial = firstNameValue[0];
             let lastInitial = lastNameValue[0];
 
-            let date = dateOfBirth.toISOString().split("T")[0];
+            let tzOffset = dateOfBirth.getTimezoneOffset() * 60000; //offset in milliseconds
+
+            let date = new Date(dateOfBirth - tzOffset)
+                .toISOString()
+                .split("T")[0];
 
             let month = date.split("-")[1];
             let day = date.split("-")[2];
