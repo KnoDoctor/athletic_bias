@@ -24,78 +24,78 @@ export default function Index() {
     const [errorMessage, setErrorMessage] = useState(null);
     const [posts, setPosts] = useState([]);
 
-    const fetchAccessToken = async () => {
-        setLoading({ ...loading, accessToken: true });
-        let accessTokenRes = await fetch("/api/auth/token", {
-            method: "GET", // or 'PUT'
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        let accessTokenData = await accessTokenRes.json();
+    // const fetchAccessToken = async () => {
+    //     setLoading({ ...loading, accessToken: true });
+    //     let accessTokenRes = await fetch("/api/auth/token", {
+    //         method: "GET", // or 'PUT'
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     });
+    //     let accessTokenData = await accessTokenRes.json();
 
-        if (!accessTokenData.success) {
-            setIsLoggedIn(false);
-            setLoading(false);
-            localStorage.setItem("loggedIn", false);
-            console.log("Refresh token invalid.");
-            return;
-        }
-        console.log(accessTokenData);
-        setRefreshToken(accessTokenData.refreshToken);
-        localStorage.setItem("refreshToken", accessTokenData.refreshToken);
-        localStorage.setItem("accessToken", accessTokenData.accessToken);
-        console.log("Access token received :)");
+    //     if (!accessTokenData.success) {
+    //         setIsLoggedIn(false);
+    //         setLoading(false);
+    //         localStorage.setItem("loggedIn", false);
+    //         console.log("Refresh token invalid.");
+    //         return;
+    //     }
+    //     console.log(accessTokenData);
+    //     setRefreshToken(accessTokenData.refreshToken);
+    //     localStorage.setItem("refreshToken", accessTokenData.refreshToken);
+    //     localStorage.setItem("accessToken", accessTokenData.accessToken);
+    //     console.log("Access token received :)");
 
-        setLoading({ ...loading, accessToken: false });
-    };
+    //     setLoading({ ...loading, accessToken: false });
+    // };
 
-    const fetchData = async () => {
-        setLoading({ ...loading, data: true });
-        let postsRes = await fetch("http://localhost:5000/posts", {
-            method: "GET", // or 'PUT'
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-        });
-        let postsData = await postsRes;
-        if (postsData.status === 403) {
-            console.log("403 - Dancing is forbidden");
-            setErrorMessage("403 - Dancing is forbidden");
-            setPosts([]);
-            setLoading({ ...loading, data: false });
-            return;
-        }
-        let posts = await postsData.json();
-        console.log(posts);
-        setPosts(posts);
-        setErrorMessage(null);
+    // const fetchData = async () => {
+    //     setLoading({ ...loading, data: true });
+    //     let postsRes = await fetch("http://localhost:5000/posts", {
+    //         method: "GET", // or 'PUT'
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //         },
+    //     });
+    //     let postsData = await postsRes;
+    //     if (postsData.status === 403) {
+    //         console.log("403 - Dancing is forbidden");
+    //         setErrorMessage("403 - Dancing is forbidden");
+    //         setPosts([]);
+    //         setLoading({ ...loading, data: false });
+    //         return;
+    //     }
+    //     let posts = await postsData.json();
+    //     console.log(posts);
+    //     setPosts(posts);
+    //     setErrorMessage(null);
 
-        setLoading({ ...loading, data: false });
-    };
+    //     setLoading({ ...loading, data: false });
+    // };
 
-    const logout = async () => {
-        let logoutRes = await fetch("/api/auth/logout");
-        let logoutData = await logoutRes.json();
-        console.log(logoutData);
-        localStorage.setItem("loggedIn", false);
-        localStorage.setItem("refreshToken", "");
-        localStorage.setItem("accessToken", "");
-        localStorage.setItem("idToken", "");
-        setIsLoggedIn(false);
-    };
+    // const logout = async () => {
+    //     let logoutRes = await fetch("/api/auth/logout");
+    //     let logoutData = await logoutRes.json();
+    //     console.log(logoutData);
+    //     localStorage.setItem("loggedIn", false);
+    //     localStorage.setItem("refreshToken", "");
+    //     localStorage.setItem("accessToken", "");
+    //     localStorage.setItem("idToken", "");
+    //     setIsLoggedIn(false);
+    // };
 
     const getCoachData = async () => {
         setIsCoachLoading(true);
         let coach = JSON.parse(localStorage.getItem("coach"));
-        console.log("COACH: ", coach);
+
         if (coach) {
             let coachRes = await fetch(`/api/coaches/${coach.coach_id}`);
             let coachData = await coachRes.json();
 
             if (!coachData.success) {
-                setLoading(false);
-                console.log(coachData);
+                localStorage.clear();
+                setIsCoachLoading(false);
                 return;
             }
 
