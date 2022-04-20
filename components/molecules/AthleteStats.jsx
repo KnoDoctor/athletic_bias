@@ -33,15 +33,46 @@ export default function AthleteStats({ stats }) {
             <h3>Athlete Stats</h3>
             <ListItem button>
                 <Grid container>
-                    <Grid item xs={6}>
-                        <p style={{ margin: 0, fontWeight: "600" }}>Drill</p>
+                    <Grid
+                        item
+                        xs={6}
+                        style={{ display: "flex", alignItems: "end" }}
+                    >
+                        <p
+                            style={{
+                                margin: 0,
+                                fontWeight: "600",
+                            }}
+                        >
+                            Drill
+                        </p>
                     </Grid>
-                    <Grid item xs={3}>
-                        <p style={{ margin: 0, fontWeight: "600" }}>Value</p>
+                    <Grid
+                        item
+                        xs={3}
+                        style={{ display: "flex", alignItems: "end" }}
+                    >
+                        <p
+                            style={{
+                                margin: 0,
+                                fontWeight: "600",
+                            }}
+                        >
+                            Value
+                        </p>
                     </Grid>
-                    <Grid item xs={3}>
-                        <p style={{ margin: 0, fontWeight: "600" }}>
-                            Group Variance
+                    <Grid
+                        item
+                        xs={3}
+                        style={{ display: "flex", alignItems: "end" }}
+                    >
+                        <p
+                            style={{
+                                margin: 0,
+                                fontWeight: "600",
+                            }}
+                        >
+                            Compared to Group Average
                         </p>
                     </Grid>
                 </Grid>
