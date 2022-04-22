@@ -42,7 +42,6 @@ const CoachConsentForm = ({ setCoachId }) => {
     function handleContinueClick(e) {
         e.preventDefault();
 
-        console.log("Consented Cick");
         createCoach();
     }
 
@@ -118,6 +117,7 @@ const CoachConsentForm = ({ setCoachId }) => {
                 last_name: lastNameValue,
                 date_of_birth: new Date(dateOfBirth - tzOffset),
                 access_code: generateAccessCode(),
+                current_signup_step: "details",
             }),
         });
         let createCoachData = await createCoachRes.json();
@@ -130,6 +130,7 @@ const CoachConsentForm = ({ setCoachId }) => {
         }
 
         setCoachId(createCoachData.data.coach_id);
+        localStorage.setItem("coach", JSON.stringify(createCoachData.data));
 
         setLoading(false);
         router.push("/coaches/signup/details");

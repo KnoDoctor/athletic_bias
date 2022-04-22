@@ -22,5 +22,6 @@ yarn-error.log*
 # Next.js
 /.next
 
-#
+# Misc.
 .passwords
+*.sql

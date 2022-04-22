@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CoachDetailsForm from "../organisms/CoachDetailsForm";
 import CoachConsentForm from "../organisms/CoachConsentForm";
 import CoachPreferencesForm from "../organisms/CoachPreferencesForm";
@@ -6,8 +6,11 @@ import CoachPreferencesForm from "../organisms/CoachPreferencesForm";
 const CoachSignup = ({ step }) => {
     const [coachId, setCoachId] = useState(null);
 
+    useEffect(() => {
+        setCoachId(JSON.parse(localStorage.getItem("coach"))?.coach_id || null);
+    }, []);
+
     const signUpStepRouter = (step) => {
-        console.log(step);
         switch (step) {
             case "consent":
                 return <CoachConsentForm setCoachId={setCoachId} />;

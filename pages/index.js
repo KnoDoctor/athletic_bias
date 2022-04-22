@@ -131,47 +131,78 @@ export default function Index() {
                 ) : (
                     <>
                         {coach ? (
-                            coach.completed_responses < 15 ? (
-                                <>
-                                    <p>
-                                        Hi {coach.first_name}, thank you for
-                                        completing your coach profile! In the
-                                        second part of this survey you will be
-                                        shown fifteen athlete profiles and asked
-                                        to share feedback on there likelihood to
-                                        succeed.
-                                    </p>
-                                    <p>
-                                        So far you have completed{" "}
-                                        {coach.completed_responses} out of 15
-                                        athlete profiles.
-                                    </p>
-                                </>
-                            ) : (
-                                <p style={{ textAlign: "center" }}>
-                                    Thank you for completing our survey{" "}
-                                    {coach.first_name}!
-                                </p>
-                            )
-                        ) : (
-                            <></>
-                        )}
-                        {coach ? (
-                            coach.completed_responses < 15 ? (
-                                <Link href="/survey">
-                                    <a style={{ textDecoration: "none" }}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            size="small"
+                            <>
+                                {coach.current_signup_step === "complete" ? (
+                                    <>
+                                        {coach.completed_responses < 15 ? (
+                                            <>
+                                                <p>
+                                                    Hi {coach.first_name}, thank
+                                                    you for completing your
+                                                    coach profile! In the second
+                                                    part of this survey you will
+                                                    be shown fifteen athlete
+                                                    profiles and asked to share
+                                                    feedback on there likelihood
+                                                    to succeed.
+                                                </p>
+                                                <p>
+                                                    So far you have completed{" "}
+                                                    {coach.completed_responses}{" "}
+                                                    out of 15 athlete profiles.
+                                                </p>
+                                                <Link href="/survey">
+                                                    <a
+                                                        style={{
+                                                            textDecoration:
+                                                                "none",
+                                                        }}
+                                                    >
+                                                        <Button
+                                                            variant="contained"
+                                                            color="primary"
+                                                            size="small"
+                                                        >
+                                                            Continue to Athletes
+                                                        </Button>
+                                                    </a>
+                                                </Link>
+                                            </>
+                                        ) : (
+                                            <p style={{ textAlign: "center" }}>
+                                                Thank you for completing our
+                                                survey {coach.first_name}!
+                                            </p>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>
+                                            Hi {coach.first_name}, we still need
+                                            a bit of information from you.
+                                            Please complete you coach profile by
+                                            clicking below.
+                                        </p>
+                                        <Link
+                                            href={`/coaches/signup/${coach.current_signup_step}`}
                                         >
-                                            Continue to Athletes
-                                        </Button>
-                                    </a>
-                                </Link>
-                            ) : (
-                                <></>
-                            )
+                                            <a
+                                                style={{
+                                                    textDecoration: "none",
+                                                }}
+                                            >
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    size="small"
+                                                >
+                                                    Complete your profile
+                                                </Button>
+                                            </a>
+                                        </Link>
+                                    </>
+                                )}
+                            </>
                         ) : (
                             <Link href="/coaches/signup/consent">
                                 <a style={{ textDecoration: "none" }}>

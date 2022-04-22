@@ -92,6 +92,7 @@ export default function CoachPreferencesForm({ coachId }) {
                 primary_position_played: primaryPositionPlayed,
                 hard_work_pref: hardWorkPreference,
                 natural_pref: naturalPreference,
+                current_signup_step: "complete",
                 preferences: selectedPreferences.map((preference) => ({
                     preference_id: preference,
                 })),

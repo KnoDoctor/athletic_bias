@@ -69,6 +69,7 @@ export default function CoachDetailsForm({ coachId }) {
                 city_of_birth: cityOfBirth.description,
                 city_of_residence: cityOfResidence.description,
                 gender_identity: genderIdentity,
+                current_signup_step: "preferences",
             }),
         });
         let updateCoachData = await updateCoachRes.json();

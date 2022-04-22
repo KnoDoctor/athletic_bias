@@ -44,6 +44,7 @@ model coaches {
   level_of_experience     String?               @db.VarChar(100)
   primary_position_played String?               @db.VarChar(150)
   completed_responses     Int?                  @default(0)
+  current_signup_step     String?               @db.VarChar(50)
   sport                   sports?               @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
   preferences             coaches_preferences[]
   responses               responses[]
@@ -132,27 +133,6 @@ model tokens {
   expiry_date DateTime? @db.Date
   parent_id   String    @db.Uuid
   user_id     String    @db.Uuid
-}
-
-model rugby_athletes {
-  position                String?   @db.VarChar(100)
-  test_date               DateTime? @db.Date
-  date_of_birth           DateTime? @db.Date
-  height                  Decimal?  @db.Decimal
-  sitting_height          Decimal?  @db.Decimal
-  weight                  Decimal?  @db.Decimal
-  age                     Decimal?  @db.Decimal
-  leg_length              Decimal?  @db.Decimal
-  years_fromphv           Decimal?  @db.Decimal
-  age_at_phv              Decimal?  @db.Decimal
-  vertical_jump           Decimal?  @db.Decimal
-  mid_thigh_pull          Decimal?  @db.Decimal
-  relative_mid_thigh_pull Decimal?  @db.Decimal
-  ten_meter               Decimal?  @db.Decimal
-  five_o_five_left        Decimal?  @db.Decimal
-  five_o_five_right       Decimal?  @db.Decimal
-  aggregate_five_o_five   Decimal?  @db.Decimal
-  rugby_athlete_id        BigInt    @id @default(autoincrement())
 }
 
 model rugby_stats {
