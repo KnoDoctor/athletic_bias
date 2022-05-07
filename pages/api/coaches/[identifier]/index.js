@@ -70,6 +70,7 @@ export default async function handle(req, res) {
                     primary_position_played,
                     completed_responses,
                     current_signup_step,
+                    completed_exit_survey,
                 } = req.body;
 
                 const buildPreferencesArray = (preferences) => {
@@ -116,6 +117,7 @@ export default async function handle(req, res) {
                         primary_position_played,
                         completed_responses,
                         current_signup_step,
+                        completed_exit_survey,
                         preferences: {
                             create: buildPreferencesArray(preferences),
                             //[

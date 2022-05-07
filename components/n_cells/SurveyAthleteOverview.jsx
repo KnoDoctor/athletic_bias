@@ -24,7 +24,7 @@ const SurveyAthleteOverview = ({ athlete }) => {
             mean: parseFloat(
                 athlete.rugby_stat.mid_thigh_pull_group_mean
             ).toFixed(2),
-            units: "cm",
+            units: "kg",
             negativeBeatsMean: false,
         },
         {

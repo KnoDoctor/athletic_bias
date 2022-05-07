@@ -45,6 +45,7 @@ model coaches {
   primary_position_played String?               @db.VarChar(150)
   completed_responses     Int?                  @default(0)
   current_signup_step     String?               @db.VarChar(50)
+  completed_exit_survey   Boolean?
   sport                   sports?               @relation(fields: [sport_id], references: [sport_id], onDelete: NoAction, onUpdate: NoAction, map: "coach_sport_id")
   preferences             coaches_preferences[]
   responses               responses[]

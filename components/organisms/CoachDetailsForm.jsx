@@ -41,7 +41,7 @@ export default function CoachDetailsForm({ coachId }) {
     const isDetailsFormIncomplete = () => {
         if (!yearsOfExperience) return true;
         if (!levelOfExperience) return true;
-        if (!highestLevelCoached) return true;
+        // if (!highestLevelCoached) return true;
         if (currentlyCoaching === null) return true;
         if (!lastAgeCoached) return true;
         if (!educationLevel) return true;
@@ -105,10 +105,10 @@ export default function CoachDetailsForm({ coachId }) {
                         marginBottom: 0,
                     }}
                 >
-                    Tell us a bit about your coaching experience:
+                    Tell us a bit about your experience:
                 </h3>
                 <RadioButtons
-                    label={`How would you rank your skill level as a coach?`}
+                    label={`How would you rank your skill level as a coach/admin/scout?`}
                     value={levelOfExperience}
                     setValue={setLevelOfExperience}
                     options={[
@@ -119,14 +119,14 @@ export default function CoachDetailsForm({ coachId }) {
                     ]}
                 />
                 <TextField
+                    label="How many years of experience do you have?"
                     id="yearsOfExperience"
                     type={"number"}
                     value={yearsOfExperience}
-                    label="Number of years you have coached?"
                     onChange={handleYearsOfExperienceChange}
                 />
                 <BasicSelect
-                    label="Are you currently in a coaching position?"
+                    label="Are you currently in a coaching/admin/scouting position?"
                     value={currentlyCoaching}
                     setValue={setCurrentlyCoaching}
                     options={[
@@ -134,7 +134,7 @@ export default function CoachDetailsForm({ coachId }) {
                         { name: "No", value: false },
                     ]}
                 />
-                <BasicSelect
+                {/* <BasicSelect
                     label="Highest level of athlete you have coached?"
                     value={highestLevelCoached}
                     setValue={setHighestLevelCoached}
@@ -144,7 +144,7 @@ export default function CoachDetailsForm({ coachId }) {
                         { name: "National", value: "National" },
                         { name: "International", value: "International" },
                     ]}
-                />
+                /> */}
                 <TextField
                     id="lastAgeCoached"
                     type={"number"}

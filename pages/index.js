@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -10,6 +11,8 @@ import Typography from "@mui/material/Typography";
 import Button from "../components/atoms/Button";
 
 export default function Index() {
+    const router = useRouter();
+
     const [loading, setLoading] = useState({
         accessToken: false,
         data: false,
@@ -105,9 +108,42 @@ export default function Index() {
         setIsCoachLoading(false);
     };
 
+    const setExitSurveyComplete = async () => {
+        setIsCoachLoading(true);
+        let coach = JSON.parse(localStorage.getItem("coach"));
+
+        if (coach) {
+            let updateCoachRes = await fetch(`/api/coaches/${coach.coach_id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    completed_exit_survey: true,
+                }),
+            });
+
+            let updateCoachData = await updateCoachRes.json();
+
+            if (!updateCoachData.success) {
+                setLoading(false);
+                console.log(updateCoachData);
+                return;
+            }
+            getCoachData();
+        }
+        setIsCoachLoading(false);
+    };
+
     useEffect(() => {
         getCoachData();
     }, []);
+
+    useEffect(() => {
+        if (router.query.surveyCompleted) {
+            setExitSurveyComplete();
+        }
+    }, [router.query]);
 
     // useEffect(() => {
     //     let payload = parseJwtPayload(idToken);
@@ -123,9 +159,7 @@ export default function Index() {
     return (
         <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
-                <h1 style={{ textAlign: "center" }}>
-                    Welcome to Take Your Pick
-                </h1>
+                <h1 style={{ textAlign: "center" }}>Take Your Pick</h1>
                 {isCoachLoading ? (
                     <p style={{ textAlign: "center" }}>Loading...</p>
                 ) : (
@@ -139,15 +173,21 @@ export default function Index() {
                                                 <p>
                                                     Hi {coach.first_name}, thank
                                                     you for completing your
-                                                    coach profile! In the second
-                                                    part of this survey you will
-                                                    be shown fifteen athlete
-                                                    profiles and asked to share
-                                                    feedback on there likelihood
-                                                    to succeed.
+                                                    coach profile!
                                                 </p>
                                                 <p>
-                                                    So far you have completed{" "}
+                                                    In the second part of this
+                                                    survey you will be shown
+                                                    fifteen athlete profiles and
+                                                    asked for feedback. Imagine
+                                                    you have an empty roster you
+                                                    are looking to fill and
+                                                    consider these athletes as
+                                                    if you would be selecting
+                                                    them to your team.
+                                                </p>
+                                                <p>
+                                                    So far you have reviewed{" "}
                                                     {coach.completed_responses}{" "}
                                                     out of 15 athlete profiles.
                                                 </p>
@@ -169,10 +209,69 @@ export default function Index() {
                                                 </Link>
                                             </>
                                         ) : (
-                                            <p style={{ textAlign: "center" }}>
-                                                Thank you for completing our
-                                                survey {coach.first_name}!
-                                            </p>
+                                            <>
+                                                {coach.completed_exit_survey ? (
+                                                    <>
+                                                        <h2>Thank You!</h2>
+                                                        <p>
+                                                            Your time and
+                                                            insight are very
+                                                            much appreciated.
+                                                        </p>
+                                                        <p>
+                                                            Any questions or
+                                                            comments, please
+                                                            email Katie at{" "}
+                                                            <a href="mailto:krobinso@yorku.ca">
+                                                                krobinso@yorku.ca
+                                                            </a>
+                                                        </p>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p>
+                                                            You're almost done{" "}
+                                                            {coach.first_name}!
+                                                        </p>
+                                                        <p>
+                                                            We just have one
+                                                            final request.
+                                                            Please take a few
+                                                            minutes to complete
+                                                            the exit survey
+                                                            linked below on your
+                                                            experience with Take
+                                                            Your Pick. This
+                                                            information is
+                                                            extremely helpful
+                                                            for us to improve
+                                                            the selection tool.
+                                                        </p>
+                                                        <p>Thank you ♥</p>
+                                                        <Link
+                                                            href={`https://docs.google.com/forms/d/e/1FAIpQLSdOvqlipXubRL2lBUnE-6pOlClLjvacDWKShw7Ian4d3k0E4Q/viewform?usp=pp_url&entry.726004286=${coach.first_name}+${coach.last_name}&entry.959984559=${coach.email}`}
+                                                        >
+                                                            <a
+                                                                style={{
+                                                                    textDecoration:
+                                                                        "none",
+                                                                }}
+                                                            >
+                                                                <Button
+                                                                    color={
+                                                                        "primary"
+                                                                    }
+                                                                    variant={
+                                                                        "contained"
+                                                                    }
+                                                                >
+                                                                    Exit Survey
+                                                                </Button>
+                                                            </a>
+                                                        </Link>
+                                                    </>
+                                                )}
+                                            </>
                                         )}
                                     </>
                                 ) : (
@@ -204,17 +303,23 @@ export default function Index() {
                                 )}
                             </>
                         ) : (
-                            <Link href="/coaches/signup/consent">
-                                <a style={{ textDecoration: "none" }}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="small"
-                                    >
-                                        Get Started
-                                    </Button>
-                                </a>
-                            </Link>
+                            <>
+                                <p>
+                                    Welcome to Take Your Pick, please follow the
+                                    link below to get started.
+                                </p>
+                                <Link href="/coaches/signup/consent">
+                                    <a style={{ textDecoration: "none" }}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            size="small"
+                                        >
+                                            Get Started
+                                        </Button>
+                                    </a>
+                                </Link>
+                            </>
                         )}
                     </>
                 )}
