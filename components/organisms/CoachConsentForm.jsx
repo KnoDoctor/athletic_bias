@@ -188,7 +188,8 @@ const CoachConsentForm = ({ setCoachId }) => {
                         textAlign: "center",
                     }}
                 >
-                    <h2>Perceptions on Athlete Development</h2>
+                    <h2 style={{ marginBottom: 0 }}>Complete Your Profile</h2>
+                    <h4 style={{ marginTop: 0 }}>1 of 3</h4>
 
                     <TextField
                         id="email"

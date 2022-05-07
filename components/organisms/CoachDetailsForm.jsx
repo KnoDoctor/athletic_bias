@@ -92,13 +92,10 @@ export default function CoachDetailsForm({ coachId }) {
                     margin: "auto",
                 }}
             >
-                <h2
-                    style={{
-                        textAlign: "center",
-                    }}
-                >
-                    Perceptions on Athlete Development
+                <h2 style={{ marginBottom: 0, textAlign: "center" }}>
+                    Complete Your Profile
                 </h2>
+                <h4 style={{ marginTop: 0, textAlign: "center" }}>2 of 3</h4>
                 {/* <p>{coachId}</p> */}
                 <h3
                     style={{

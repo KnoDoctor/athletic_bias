@@ -173,7 +173,7 @@ export default function Index() {
                                                 <p>
                                                     Hi {coach.first_name}, thank
                                                     you for completing your
-                                                    coach profile!
+                                                    profile!
                                                 </p>
                                                 <p>
                                                     In the second part of this
