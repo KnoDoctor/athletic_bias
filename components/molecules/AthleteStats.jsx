@@ -2,7 +2,6 @@ import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Grid from "@mui/material/Grid";
-import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 
 const style = {
@@ -31,6 +30,7 @@ export default function AthleteStats({ stats }) {
     return (
         <List sx={style} aria-label="mailbox folders">
             <h3>Athlete Stats</h3>
+
             <ListItem button>
                 <Grid container>
                     <Grid
@@ -72,7 +72,7 @@ export default function AthleteStats({ stats }) {
                                 fontWeight: "600",
                             }}
                         >
-                            Compared to Group Average
+                            Compared to Group Average*
                         </p>
                     </Grid>
                 </Grid>
@@ -125,6 +125,35 @@ export default function AthleteStats({ stats }) {
             ) : (
                 <></>
             )}
+            <Grid container style={{ paddingTop: "1rem" }}>
+                <Grid item xs={12}>
+                    <p style={{ margin: 0, fontSize: "14px" }}>
+                        <em>
+                            *{" "}
+                            <span
+                                style={{ color: "green", fontWeight: "bold" }}
+                            >
+                                Green highlighting
+                            </span>{" "}
+                            indicates the athlete performed{" "}
+                            <span
+                                style={{ color: "green", fontWeight: "bold" }}
+                            >
+                                better
+                            </span>{" "}
+                            than the group average while{" "}
+                            <span style={{ color: "red", fontWeight: "bold" }}>
+                                red highlighting
+                            </span>{" "}
+                            indicates the athlete performed{" "}
+                            <span style={{ color: "red", fontWeight: "bold" }}>
+                                worse
+                            </span>{" "}
+                            than the group average.
+                        </em>
+                    </p>
+                </Grid>
+            </Grid>
         </List>
     );
 }

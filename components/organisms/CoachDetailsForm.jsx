@@ -161,15 +161,20 @@ export default function CoachDetailsForm({ coachId }) {
                     Tell us a bit about you:
                 </h3>
                 <BasicSelect
-                    label="How do you identify?"
+                    label="To which gender identity do you most identify?"
                     value={genderIdentity}
                     setValue={setGenderIdentity}
                     options={[
-                        { name: "Male", value: "Male" },
-                        { name: "Female", value: "Female" },
+                        { name: "Woman", value: "Woman" },
+                        { name: "Man", value: "Man" },
+                        { name: "Transgender", value: "Transgender" },
                         {
-                            name: "Prefer Not To Say",
-                            value: "Prefer Not To Say",
+                            name: "Non-binary/non-conforming",
+                            value: "Non-binary/non-conforming",
+                        },
+                        {
+                            name: "Prefer not to respond",
+                            value: "Prefer not to respond",
                         },
                     ]}
                 />

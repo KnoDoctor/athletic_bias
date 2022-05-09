@@ -247,7 +247,7 @@ export default function Index() {
                                                             for us to improve
                                                             the selection tool.
                                                         </p>
-                                                        <p>Thank you ♥</p>
+                                                        <p>Thank you 😀</p>
                                                         <Link
                                                             href={`https://docs.google.com/forms/d/e/1FAIpQLSdOvqlipXubRL2lBUnE-6pOlClLjvacDWKShw7Ian4d3k0E4Q/viewform?usp=pp_url&entry.726004286=${coach.first_name}+${coach.last_name}&entry.959984559=${coach.email}`}
                                                         >
