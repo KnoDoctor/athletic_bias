@@ -269,6 +269,7 @@ export default function Index() {
                                                                         "contained"
                                                                     }
                                                                 >
+                                                                    Complete
                                                                     Exit Survey
                                                                 </Button>
                                                             </a>
@@ -309,8 +310,8 @@ export default function Index() {
                         ) : (
                             <>
                                 <p>
-                                    Welcome to Take Your Pick, please follow the
-                                    link below to get started.
+                                    Welcome to Take Your Pick, please click the
+                                    button below to get started.
                                 </p>
                                 <Link href="/coaches/signup/consent">
                                     <a style={{ textDecoration: "none" }}>
