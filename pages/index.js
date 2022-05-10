@@ -13,6 +13,8 @@ import Button from "../components/atoms/Button";
 export default function Index() {
     const router = useRouter();
 
+    console.log(router.query);
+
     const [loading, setLoading] = useState({
         accessToken: false,
         data: false,
@@ -20,6 +22,7 @@ export default function Index() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isCoachLoading, setIsCoachLoading] = useState(true);
     const [coach, setCoach] = useState(null);
+    const [isExitSurveyComplete, setIsExitSurveyComplete] = useState(false);
     const [refreshToken, setRefreshToken] = useState("");
     const [idToken, setIdToken] = useState("");
     const [email, setEmail] = useState("");
@@ -130,14 +133,14 @@ export default function Index() {
                 console.log(updateCoachData);
                 return;
             }
-            getCoachData();
+            setIsExitSurveyComplete(true);
         }
         setIsCoachLoading(false);
     };
 
     useEffect(() => {
         getCoachData();
-    }, []);
+    }, [isExitSurveyComplete]);
 
     useEffect(() => {
         if (router.query.surveyCompleted) {
