@@ -22,7 +22,6 @@ export default function Index() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isCoachLoading, setIsCoachLoading] = useState(true);
     const [coach, setCoach] = useState(null);
-    const [isExitSurveyComplete, setIsExitSurveyComplete] = useState(false);
     const [refreshToken, setRefreshToken] = useState("");
     const [idToken, setIdToken] = useState("");
     const [email, setEmail] = useState("");
@@ -133,19 +132,21 @@ export default function Index() {
                 console.log(updateCoachData);
                 return;
             }
-            setIsExitSurveyComplete(true);
+            localStorage.setItem("coach", JSON.stringify(updateCoachData.data));
+            setCoach(updateCoachData.data);
         }
         setIsCoachLoading(false);
     };
 
-    useEffect(() => {
-        getCoachData();
-    }, [isExitSurveyComplete]);
+    // useEffect(() => {
+    //     getCoachData();
+    // }, []);
 
     useEffect(() => {
         if (router.query.surveyCompleted) {
-            setExitSurveyComplete();
+            return setExitSurveyComplete();
         }
+        getCoachData();
     }, [router.query]);
 
     // useEffect(() => {
